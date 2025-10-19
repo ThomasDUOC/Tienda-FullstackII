@@ -1,25 +1,28 @@
 .carousel-item img {
   /* Asegura que la imagen cubra todo el contenedor */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* La propiedad clave: la imagen cubre el espacio sin estirarse, 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* La propiedad clave: la imagen cubre el espacio sin estirarse, 
         aunque se recorte un poco por los lados. */
-    object-fit: cover; 
+  object-fit: cover;
 }
 
 /* Define la altura máxima para el contenedor del carrusel */
 #mi-carrusel-personalizado {
-  max-height: 450px; /* <--- ¡Ajusta este valor a tu gusto! */
-  overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde */
+  max-height: 450px;
+  overflow: hidden;
+  /* Oculta cualquier parte de la imagen que se desborde */
 }
 
 /* Ajusta la imagen para que llene el nuevo contenedor sin deformarse */
 #mi-carrusel-personalizado .carousel-item img {
   height: 100%;
-  object-fit: cover; /* Mantiene la proporción, recortando si es necesario */
-  object-position: center; /* Centra la imagen visible */
+  object-fit: cover;
+  /* Mantiene la proporción, recortando si es necesario */
+  object-position: center;
+  /* Centra la imagen visible */
 }
