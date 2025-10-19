@@ -1,71 +1,226 @@
+import { useState } from 'react';
+import '../assets/css/contact.css';
+
 function Contact() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+    });
+
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // sim formulario
+        console.log('Contact form submitted:', formData);
+        setSubmitted(true);
+
+        // formulario resetear
+        setTimeout(() => {
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: ''
+            });
+            setSubmitted(false);
+        }, 3000);
+    };
+
     return (
-        <div className="d-flex justify-content-center align-items-center">
-            <form id="registroForm" className="form-container" style={{color: '#ea39b8;'}}>
-                <fieldset>
-                    <div className="d-flex justify-content-end">
-                        <Link className='btn btn-primary' to='/'>X</Link>
+        <div className="contact-page">
+            <div className="container">
+                <div className="contact-header">
+                    <h1>Contáctanos</h1>
+                    <p>¿Tienes alguna pregunta? Estamos aquí para ayudarte</p>
+                </div>
+
+                <div className="contact-content">
+                    {/* contactos */}
+                    <div className="contact-info">
+                        <h2>Información de Contacto</h2>
+
+                        <div className="info-item">
+                            <i className="bi bi-geo-alt-fill"></i>
+                            <div>
+                                <h3>Dirección</h3>
+                                <p>Av. Principal 1234<br />Santiago, Chile</p>
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <i className="bi bi-telephone-fill"></i>
+                            <div>
+                                <h3>Teléfono</h3>
+                                <p>+56 2 2345 6789<br />Lun - Vie: 9:00 - 18:00</p>
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <i className="bi bi-envelope-fill"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>info@levelup.cl<br />soporte@levelup.cl</p>
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <i className="bi bi-clock-fill"></i>
+                            <div>
+                                <h3>Horario de Atención</h3>
+                                <p>Lunes a Viernes: 9:00 - 20:00<br />
+                                    Sábados: 10:00 - 18:00<br />
+                                    Domingos: Cerrado</p>
+                            </div>
+                        </div>
+
+                        <div className="social-links">
+                            <h3>Síguenos</h3>
+                            <div className="social-icons">
+                                <a href="#" className="social-icon"><i className="bi bi-facebook"></i></a>
+                                <a href="#" className="social-icon"><i className="bi bi-twitter"></i></a>
+                                <a href="#" className="social-icon"><i className="bi bi-instagram"></i></a>
+                                <a href="#" className="social-icon"><i className="bi bi-youtube"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <legend className="text-center">Registro de usuario</legend>
-                    <div className="mb-3">
-                        <label className="form-label" htmlFor="nombreInput">Nombre Completo</label>
-                        <input className="form-control" id="nombreInput" type="text" placeholder="Ingrese su nombre completo..." required/>
-                        <div id="nombreError" className="error-message">El nombre debe contener al menos 3 carácteres y solo letras.</div>
-                        <div id="nombreSuccess" className="success-message">¡Nombre válido!</div>
+
+                    {/* formulario */}
+                    <div className="contact-form-container">
+                        <h2>Envíanos un Mensaje</h2>
+
+                        {submitted && (
+                            <div className="alert alert-success">
+                                <i className="bi bi-check-circle-fill"></i>
+                                ¡Mensaje enviado con éxito! Te responderemos pronto.
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="contact-form">
+                            <div className="form-group">
+                                <label htmlFor="name">Nombre Completo *</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    className="form-control"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="Tu nombre completo"
+                                />
+                            </div>
+
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="email">Correo Electrónico *</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        className="form-control"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="tu@email.com"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="phone">Teléfono</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        className="form-control"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        placeholder="+56 9 1234 5678"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="subject">Asunto *</label>
+                                <select
+                                    id="subject"
+                                    name="subject"
+                                    className="form-control"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">Selecciona un asunto</option>
+                                    <option value="consulta">Consulta General</option>
+                                    <option value="pedido">Seguimiento de Pedido</option>
+                                    <option value="producto">Información de Producto</option>
+                                    <option value="devolucion">Devoluciones y Cambios</option>
+                                    <option value="tecnico">Soporte Técnico</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="message">Mensaje *</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    className="form-control"
+                                    rows="6"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="Escribe tu mensaje aquí..."
+                                ></textarea>
+                            </div>
+
+                            <button type="submit" className="btn btn-primary btn-lg w-100">
+                                <i className="bi bi-send-fill"></i> Enviar Mensaje
+                            </button>
+                        </form>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="emailInput" className="form-label">Correo</label>
-                        <input type="email" className="form-control" id="emailInput" placeholder="Ingrese su correo" required/>
-                        <div id="emailError" className="error-message">Por favor, ingrese un correo electrónico válido.</div>
-                        <div id="emailSuccess" className="success-message">¡Correo electrónico válido!</div>
-                        <small className="form-text text-muted">Nunca compartiremos tu correo electrónico con nadie más.</small>
+                </div>
+
+                {/* preguntas frecuentes */}
+                <div className="faq-section">
+                    <h2>Preguntas Frecuentes</h2>
+                    <div className="faq-grid">
+                        <div className="faq-item">
+                            <i className="bi bi-question-circle"></i>
+                            <h3>¿Cuál es el tiempo de entrega?</h3>
+                            <p>Los pedidos se entregan entre 2-5 días hábiles en la Región Metropolitana y 3-7 días en regiones.</p>
+                        </div>
+                        <div className="faq-item">
+                            <i className="bi bi-question-circle"></i>
+                            <h3>¿Hacen envíos a todo Chile?</h3>
+                            <p>Sí, realizamos envíos a todas las regiones de Chile. El envío es gratis en compras sobre $50.000.</p>
+                        </div>
+                        <div className="faq-item">
+                            <i className="bi bi-question-circle"></i>
+                            <h3>¿Cuál es la política de devoluciones?</h3>
+                            <p>Aceptamos devoluciones dentro de 30 días desde la compra. El producto debe estar sin usar y en su embalaje original.</p>
+                        </div>
+                        <div className="faq-item">
+                            <i className="bi bi-question-circle"></i>
+                            <h3>¿Ofrecen garantía en los productos?</h3>
+                            <p>Todos nuestros productos tienen garantía del fabricante. Consolas y accesorios: 1 año. Juegos: Según términos del editor.</p>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label htmlFor="passwordInput" className="form-label">Contraseña</label>
-                        <input type="password" className="form-control" id="passwordInput" placeholder="Contraseña" required
-                            autocomplete="off"/>
-                        <div id="passwordError" className="error-message">La contraseña debe tener al menos 8 caracteres, incluir una
-                            mayúscula, un número y un carácter especial.</div>
-                        <div id="passwordSuccess" className="success-message">¡Contraseña válida!</div>
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="confirmPasswordInput" className="form-label">Confirme Contraseña</label>
-                        <input type="password" className="form-control" id="confirmPasswordInput" placeholder="Confirme Contraseña"
-                            required autocomplete="off"/>
-                        <div id="confirmPasswordError" className="error-message">Las contraseñas no coinciden.</div>
-                        <div id="confirmPasswordSuccess" className="success-message">¡Las contraseñas coinciden!</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="regionSelect" className="form-label">Seleccione región</label>
-                        <select className="form-select" id="regionSelect" required>
-                            <option value="">Seleccione una región</option>
-                            <option value="1">Región Metropolitana</option>
-                            <option value="2">Valparaíso</option>
-                            <option value="3">Biobío</option>
-                            <option value="4">La Araucanía</option>
-                            <option value="5">Los Lagos</option>
-                        </select>
-                        <div id="regionError" className="error-message">Por favor, seleccione una región.</div>
-                        <div id="regionSuccess" className="success-message">¡Región seleccionada!</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="comunaSelect" className="form-label">Seleccione comuna</label>
-                        <select className="form-select" id="comunaSelect" required>
-                            <option value="">Seleccione una comuna</option>
-                            <option value="1">Santiago</option>
-                            <option value="2">Providencia</option>
-                            <option value="3">Las Condes</option>
-                            <option value="4">Ñuñoa</option>
-                            <option value="5">La Florida</option>
-                        </select>
-                        <div id="comunaError" className="error-message">Por favor, seleccione una comuna.</div>
-                        <div id="comunaSuccess" className="success-message">¡Comuna seleccionada!</div>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100 mt-4" id="submitButton" disabled>Registrar</button>
-                </fieldset>
-            </form>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default Contact;
