@@ -5,7 +5,7 @@ export const products = [
         name: 'PlayStation 5',
         category: 'consolas',
         price: '700.000',
-        image: '/src/assets/images/PS5Digital.ppg',
+        image: '/src/assets/images/PS5Digital.png',
         description: 'La consola de nueva generación de Sony con gráficos 4K y velocidades ultrarrápidas.',
         stock: 15,
         featured: true,
