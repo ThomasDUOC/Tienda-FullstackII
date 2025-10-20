@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { getFeaturedProducts } from '../data/products';
 import { ProductCard } from './ProductCard';
-import fifa25 from '../assets/images/fifa251920.jpg';
-import ps51920 from '../assets/images/ps51920.jpg';
-import controlxboxs from '../assets/images/ControlXboxSeries.webp';
+import ps51920 from '../assets/images/ps51920.jpg'
+import god from '../assets/images/godwall.jpg';
+import tlou from '../assets/images/tlouwall.png';
 import '../assets/css/home.css';
 
 function Home() {
@@ -21,13 +21,13 @@ function Home() {
                     </div>
                     <div className="carousel-inner">
                         <div className="carousel-item active ratio ratio-16x9">
-                            <img src={fifa25} className="d-block w-100" alt="FIFA 25" />
+                            <img src={tlou} className="d-block w-100" alt="FIFA 25" />
                         </div>
                         <div className="carousel-item ratio ratio-16x9">
                             <img src={ps51920} className="d-block w-100" alt="PlayStation 5" />
                         </div>
                         <div className="carousel-item ratio ratio-16x9">
-                            <img src={controlxboxs} className="d-block w-100" alt="Xbox Controller" />
+                            <img src={god} className="d-block w-100" alt="Xbox Controller" />
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

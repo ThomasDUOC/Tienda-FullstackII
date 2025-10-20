@@ -7,7 +7,7 @@ import { Products } from './components/Products';
 import { ProductDetail } from './components/ProductDetail';
 import { Cart } from './components/Cart';
 import { Checkout } from './components/Checkout';
-import Navbar from './components/Navbar';
+import VistaAdmin from './components/VistaAdmin';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,7 +28,7 @@ function App() {
             <Route path='/checkout' element={<Checkout />} />
             <Route path='/login' element={<Login />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path='/navbar' element={<Navbar />} />
+            <Route path='/vistaadmin' element={<VistaAdmin />} />
           </Routes>
         </main>
         <Footer />

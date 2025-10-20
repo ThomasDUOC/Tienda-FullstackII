@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { validateEmail, validatePassword } from '../assets/js/validators.js';
+import Logo from '../assets/images/Level-Up-Logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,7 +34,8 @@ function Login() {
         e.preventDefault();
         if (isEmailValid && isPasswordValid) {
             // lógica formualrio
-            window.location.href = 'index.html';
+            console.log('Formulario enviado');
+            navigate('/'); // Redirigir al dashboard después del inicio de sesión exitoso
         }
     };
 
@@ -45,7 +50,7 @@ function Login() {
             </div>
 
             <div className="d-flex justify-content-center align-items-center vh-10">
-                <form onSubmit={handleSubmit} style={{ color: "#ea39b8", minWidth: '500px', minHeight: '500px' }} noValidate>
+                <form onSubmit={handleSubmit} style={{ color: "#ea39b8", width: '500px', minHeight: '500px' }} noValidate>
                     <fieldset>
                         <div className="d-flex justify-content-end">
                             <Link className='btn btn-primary' to='/'>X</Link>
@@ -53,7 +58,7 @@ function Login() {
                         <legend className="text-center">Inicio Sesión</legend>
 
                         <div className="mb-3">
-                            <label htmlFor="emailInput" className="form-label">Correo</label>
+                            <label htmlFor="emailInput" className="form-label" style={{color: "#ea39b8"}}>Correo</label>
                             <input type="email" name="email" className={`form-control ${touched.email && (isEmailValid ? 'is-valid' : 'is-invalid')}`} id='emailInput' value={email} onChange={handleChange} onBlur={handleBlur} placeholder="Ingrese su correo" required />
                             {touched.email && !isEmailValid && <div className="invalid-feedback d-block">Por favor, ingrese un correo electrónico válido.</div>}
                             {touched.email && isEmailValid && <div className="valid-feedback d-block">¡Correo electrónico válido!</div>}
@@ -61,14 +66,16 @@ function Login() {
                         </div>
 
                         <div class="mb-3">
-                            <label htmlFor="passwordInput" className="form-label">Contraseña</label>
+                            <label htmlFor="passwordInput" className="form-label" style={{color: "#ea39b8"}}>Contraseña</label>
                             <input type="password" name="password" id="passwordInput" className={`form-control ${touched.password && (isPasswordValid ? 'is-valid' : 'is-invalid')}`} placeholder="Ingrese su contraseña" value={password} onChange={handleChange} onBlur={handleBlur} required autoComplete='off' />
-                            {touched.password && !isPasswordValid && <div className="invalid-feedback d-block">La contraseña debe tener al menos 8 caracteres, incluir una
-                                mayúscula, un número y un carácter especial.</div>}
-                            {touched.password && isPasswordValid && <div className="valid-feedback d-block">¡Contraseña válida!</div>}
+                            <div className="invalid-feedback">La contraseña debe tener al menos 8 caracteres, una
+                                mayúscula, un número y un carácter especial.</div>
+                            <div className="valid-feedback">¡Contraseña válida!</div>
                         </div>
 
-                        <button type="submit" className="btn btn-primary w-100" id="submitButton" disabled={!isFormValid}>Iniciar Sesión</button>
+                        <button type="submit" className="btn btn-primary w-100 mb-3" id="submitButton" disabled={!isFormValid}>Iniciar Sesión</button>
+
+                        <Link className='btn btn-primary w-100' to='/vistaadmin'>Iniciar Sesión como Administrador</Link>
                     </fieldset>
                 </form>
             </div>
