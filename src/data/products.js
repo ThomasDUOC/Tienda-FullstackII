@@ -5,11 +5,7 @@ export const products = [
         name: 'PlayStation 5',
         category: 'consolas',
         price: '700.000',
-<<<<<<< HEAD
         image: '/src/assets/images/PS5Digital.ppg',
-=======
-        image: '/src/assets/images/PS5Fisico.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La consola de nueva generación de Sony con gráficos 4K y velocidades ultrarrápidas.',
         stock: 15,
         featured: true,
@@ -29,11 +25,7 @@ export const products = [
         name: 'Xbox Series X',
         category: 'consolas',
         price: '500.000',
-<<<<<<< HEAD
         image: '/src/assets/images/XboxSeriesX.png',
-=======
-        image: '/src/assets/images/xboxseriesx.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La consola más potente de Xbox con compatibilidad total hacia atrás.',
         stock: 12,
         featured: true,
@@ -53,11 +45,7 @@ export const products = [
         name: 'Nintendo Switch OLED',
         category: 'consolas',
         price: '350.000',
-<<<<<<< HEAD
         image: '/src/assets/images/SwitchOLED.webp',
-=======
-        image: '/src/assets/images/nintendoswitcholed.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La versión mejorada de Nintendo Switch con pantalla OLED de 7 pulgadas.',
         stock: 20,
         featured: true,
@@ -76,11 +64,7 @@ export const products = [
         name: 'PlayStation 4 Pro',
         category: 'consolas',
         price: '400.000',
-<<<<<<< HEAD
         image: '/src/assets/images/PS4Pro.webp',
-=======
-        image: '/src/assets/images/ps4pro.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La versión mejorada de PlayStation 4 con soporte 4K.',
         stock: 8,
         featured: false,
@@ -103,11 +87,7 @@ export const products = [
         category: 'juegos',
         platform: 'PlayStation',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/GoWRPS4.jpg',
-=======
-        image: '/src/assets/images/gowragnarokps45.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Continúa la épica aventura de Kratos y Atreus en los reinos nórdicos.',
         stock: 30,
         featured: true,
@@ -128,11 +108,7 @@ export const products = [
         category: 'juegos',
         platform: 'PlayStation',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/Spiderman2.webp',
-=======
-        image: '/src/assets/images/spider2otra.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Balancéate por Nueva York con Peter Parker y Miles Morales.',
         stock: 25,
         featured: true,
@@ -153,11 +129,7 @@ export const products = [
         category: 'juegos',
         platform: 'PlayStation',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/HorizonFWPS4.jpg',
-=======
-        image: '/src/assets/images/hfw.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Explora un mundo post-apocalíptico lleno de máquinas peligrosas.',
         stock: 18,
         featured: false,
@@ -178,11 +150,7 @@ export const products = [
         category: 'juegos',
         platform: 'PlayStation',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/TLoU2PS4.webp',
-=======
-        image: '/src/assets/images/tlou2og.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La esperada secuela del aclamado juego de Naughty Dog.',
         stock: 22,
         featured: false,
@@ -205,11 +173,7 @@ export const products = [
         category: 'juegos',
         platform: 'Xbox',
         price: '60.000',
-<<<<<<< HEAD
         image: '/src/assets/images/HInfiniteXSX.webp',
-=======
-        image: '/src/assets/images/haloinfinitew.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'El regreso del Jefe Maestro en esta nueva aventura de Halo.',
         stock: 20,
         featured: false,
@@ -230,11 +194,7 @@ export const products = [
         category: 'juegos',
         platform: 'Xbox',
         price: '60.000',
-<<<<<<< HEAD
         image: '/src/assets/images/ForzaHorizon5XSX.webp',
-=======
-        image: '/src/assets/images/forzahorizon5.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Corre por los hermosos paisajes de México en el mejor juego de carreras.',
         stock: 15,
         featured: true,
@@ -255,11 +215,7 @@ export const products = [
         category: 'juegos',
         platform: 'Xbox',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/Starfield.jpg',
-=======
-        image: '/src/assets/images/starfield.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Explora el universo en este RPG espacial de Bethesda.',
         stock: 28,
         featured: true,
@@ -282,11 +238,7 @@ export const products = [
         category: 'juegos',
         platform: 'Nintendo',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/ToTK.jpg',
-=======
-        image: '/src/assets/images/zeldatears.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'La esperada secuela de Breath of the Wild.',
         stock: 35,
         featured: true,
@@ -307,11 +259,7 @@ export const products = [
         category: 'juegos',
         platform: 'Nintendo',
         price: '60.000',
-<<<<<<< HEAD
         image: '/src/assets/images/SMOdyssey.webp',
-=======
-        image: '/src/assets/images/mario.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Acompaña a Mario en una aventura por todo el mundo.',
         stock: 24,
         featured: false,
@@ -332,11 +280,7 @@ export const products = [
         category: 'juegos',
         platform: 'Nintendo',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/PKMNScarlet.webp',
-=======
-        image: '/src/assets/images/pokescar.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Explora la región de Paldea en esta nueva aventura Pokémon.',
         stock: 30,
         featured: false,
@@ -377,11 +321,7 @@ export const products = [
         name: 'Xbox Wireless Controller - Robot White',
         category: 'accesorios',
         price: '60.000',
-<<<<<<< HEAD
         image: '/src/assets/images/xboxcontrollerwhite.webp',
-=======
-        image: '/src/assets/images/xboxw.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Control inalámbrico para Xbox con agarre texturizado.',
         stock: 35,
         featured: false,
@@ -400,11 +340,7 @@ export const products = [
         name: 'Nintendo Switch Pro Controller',
         category: 'accesorios',
         price: '70.000',
-<<<<<<< HEAD
         image: '/src/assets/images/SwitchProController1.jfif',
-=======
-        image: '/src/assets/images/nintendopro.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Control profesional para Nintendo Switch.',
         stock: 25,
         featured: false,
@@ -423,11 +359,7 @@ export const products = [
         name: 'PlayStation 5 Headset',
         category: 'accesorios',
         price: '100.000',
-<<<<<<< HEAD
         image: '/src/assets/images/pulse_elite_1.jpg',
-=======
-        image: '/src/assets/images/ps5head.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Auriculares inalámbricos con audio 3D Tempest.',
         stock: 18,
         featured: false,
@@ -446,11 +378,7 @@ export const products = [
         name: 'Razer Gaming Keyboard Blackwidow V4 X',
         category: 'accesorios',
         price: '130.000',
-<<<<<<< HEAD
         image: '/src/assets/images/BlackwidowV4X.webp',
-=======
-        image: '/src/assets/images/razerkey.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Teclado mecánico gaming con iluminación RGB.',
         stock: 12,
         featured: false,
@@ -469,11 +397,7 @@ export const products = [
         name: 'Logitech Gaming Mouse G203',
         category: 'accesorios',
         price: '80.000',
-<<<<<<< HEAD
         image: '/src/assets/images/G203.webp',
-=======
-        image: '/src/assets/images/MouseLogitech.webp',
->>>>>>> 57f98df117aac60b2701e3bef7b3263241a4258d
         description: 'Ratón gaming de alta precisión con sensor óptico.',
         stock: 22,
         featured: false,
@@ -503,4 +427,4 @@ export const getFeaturedProducts = () => {
 
 export const getProductsByPlatform = (platform) => {
     return products.filter(product => product.platform === platform);
-};
+}; //
