@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { getFeaturedProducts } from '../data/products';
 import { ProductCard } from './ProductCard';
-import fifa25 from '../assets/images/fifa251920.jpg';
+import ps51920 from '../assets/images/ps51920.jpg'
 import god from '../assets/images/godwall.jpg';
 import tlou from '../assets/images/tlouwall.png';
 import '../assets/css/home.css';
