@@ -6,6 +6,30 @@ import god from '../assets/images/godwall.jpg';
 import tlou from '../assets/images/tlouwall.png';
 import '../assets/css/home.css';
 
+const carouselSlides = [
+    {
+        id: 0,
+        image: tlou,
+        title: 'The Last of Us Part II',
+        description: '¡Ya Disponible!',
+        alt: 'The Last of Us Part II'
+    },
+    {
+        id: 1,
+        image: ps51920,
+        title: 'PlayStation 5',
+        description: 'La nueva generación de consolas ya está aquí.',
+        alt: 'PlayStation 5'
+    },
+    {
+        id: 2,
+        image: god,
+        title: 'God of War Ragnarök',
+        description: 'Acompaña a Kratos y Atreus en su viaje épico.',
+        alt: 'God of War Ragnarök'
+    }
+];
+
 function Home() {
     const featuredProducts = getFeaturedProducts();
 
@@ -15,21 +39,30 @@ function Home() {
             <div className='container mt-4'>
                 <div id="carouselExampleIndicators" className="carousel slide">
                     <div className="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        {carouselSlides.map((slide, index) => (
+                            <button 
+                            key={slide.id} 
+                            type="button" 
+                            data-bs-target="#carouselExampleIndicators" 
+                            data-bs-slide-to={index} 
+                            className={index === 0 ? "active" : ""} 
+                            aria-current={index === 0 ? "true" : "false"} 
+                            aria-label={`Slide ${index + 1}`}>
+                            </button>
+                    ))}
                     </div>
                     <div className="carousel-inner">
-                        <div className="carousel-item active ratio ratio-16x9">
-                            <img src={tlou} className="d-block w-100" alt="FIFA 25" />
-                        </div>
-                        <div className="carousel-item ratio ratio-16x9">
-                            <img src={ps51920} className="d-block w-100" alt="PlayStation 5" />
-                        </div>
-                        <div className="carousel-item ratio ratio-16x9">
-                            <img src={god} className="d-block w-100" alt="Xbox Controller" />
-                        </div>
-                    </div>
+                        {carouselSlides.map((slide, index) => (
+                            <div key={slide.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                                <img src={slide.image} className="d-block w-100" alt={slide.alt} />
+                                {slide.title && (
+                                    <div className='carousel-caption d-none d-md-block position-absolute top-p start-0 text-start m-3 p-1 bg-dark bg-opacity-50 rounded w-50'>
+                                        <h5>{slide.title}</h5>
+                                        <p>{slide.description}</p>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
@@ -40,6 +73,7 @@ function Home() {
                     </button>
                 </div>
             </div>
+        </div>
 
             {/* cats */}
             <section className="categories-section">

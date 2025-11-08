@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -14,25 +14,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 
+
 function App() {
+
+  const location = useLocation();
+  const isAdminRoute = location.pathname === ('/vistaadmin');
   return (
     <CartProvider>
-      <div className="app">
-        <Header />
-        <main className="main-content">
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/product/:id' element={<ProductDetail />} />
-            <Route path='/cart' element={<Cart />} />
-            <Route path='/checkout' element={<Checkout />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/vistaadmin' element={<VistaAdmin />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+        <div className="app">
+          {!isAdminRoute && <Header />}
+          <main className="main-content">
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/product/:id' element={<ProductDetail />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/checkout' element={<Checkout />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/vistaadmin' element={<VistaAdmin />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
     </CartProvider>
   );
 }

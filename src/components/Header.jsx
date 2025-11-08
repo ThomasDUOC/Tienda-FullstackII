@@ -33,8 +33,8 @@ function Header() {
                         </li>
                     </ul>
                     <form className="d-flex me-3">
-                        <input className='form-control me-sm-2' type="search" placeholder='Buscar' />
-                        <button className='btn btn-secondary my-2 my-sm-0' type='submit'>Buscar</button>
+                        <input className='form-control rounded-pill me-sm-2' type="search" placeholder='Buscar' />
+                        <button className='btn btn-secondary rounded-4 my-2 my-sm-0' type='submit'>Buscar</button>
                     </form>
                     <Link className='position-relative' to='/cart'>
                         <img src={Carrito} alt="Carrito" width={30} height={24} />

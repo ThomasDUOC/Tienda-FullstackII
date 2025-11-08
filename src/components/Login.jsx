@@ -32,10 +32,14 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (isEmailValid && isPasswordValid) {
-            // lógica formualrio
-            console.log('Formulario enviado');
-            navigate('/'); // Redirigir al dashboard después del inicio de sesión exitoso
+        const admin_email = 'admin@levelup.cl';
+        const admin_password = 'Admin1234.*'
+        if (email === admin_email && password === admin_password) {
+            console.log('Inicio de sesion como admin');
+            localStorage.setItem('userRole', 'admin');
+            navigate('/vistaadmin'); // Redirigir al dashboard después del inicio de sesión exitoso
+        } else {
+            navigate('/'); //Redirigir a la vista de usuario normal
         }
     };
 
@@ -75,7 +79,6 @@ function Login() {
 
                         <button type="submit" className="btn btn-primary w-100 mb-3" id="submitButton" disabled={!isFormValid}>Iniciar Sesión</button>
 
-                        <Link className='btn btn-primary w-100' to='/vistaadmin'>Iniciar Sesión como Administrador</Link>
                     </fieldset>
                 </form>
             </div>
