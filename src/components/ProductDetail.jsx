@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getProductById } from '../data/products';
+//import { getProductById } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import '../assets/css/productdetail.css';
 
 export const ProductDetail = () => {
     const { id } = useParams();
-    const product = getProductById(id);
-    const { addToCart } = useCart();
+    const { products } = useProducts();
+    const product = products.find(p => p.id.toString() === id);
+    const { addToCart, cartItems } = useCart();
+    const { showToast } = useToast();
     const [quantity, setQuantity] = useState(1);
 
     if (!product) {
@@ -24,9 +28,19 @@ export const ProductDetail = () => {
     }
 
     const handleAddToCart = () => {
+        // Se busca si el producto ya existe en el carrito
+        const itemInCart = cartItems?.find(item => item.id === product.id);
+        // Se obtiene la cantidad que ya esta guardada en el carrito
+        const currentCartQuantity = itemInCart ? itemInCart.quantity : 0;
+
+        if (currentCartQuantity + quantity > product.stock) {
+            showToast(`No puedes añadir más de ${product.stock} unidades de ${product.name}.`, 'error');
+            return;
+        }
         addToCart(product, quantity);
-        alert(`${quantity} x ${product.name} añadido al carrito`);
+        showToast(`¡${product.name} ha sido añadido al carrito!`);
     };
+    
 
     const handleQuantityChange = (change) => {
         const newQuantity = quantity + change;

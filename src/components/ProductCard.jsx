@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import '../assets/css/productcard.css';
 
 export const ProductCard = ({ product, showAddToCart = true }) => {
     const { addToCart } = useCart();
+    const { showToast } = useToast();
 
     const handleAddToCart = (e) => {
         e.preventDefault();
         addToCart(product);
-        // notif
-        alert(`${product.name} añadido al carrito`);
+        // notificacion
+        showToast(`¡${product.name} ha sido añadido al carrito!`);
     };
 
     return (
