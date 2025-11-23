@@ -12,21 +12,24 @@ const carouselSlides = [
         image: tlou,
         title: 'The Last of Us Part II',
         description: '¡Ya Disponible!',
-        alt: 'The Last of Us Part II'
+        alt: 'The Last of Us Part II',
+        link: '/product/8'
     },
     {
         id: 1,
         image: ps51920,
         title: 'PlayStation 5',
         description: 'La nueva generación de consolas ya está aquí.',
-        alt: 'PlayStation 5'
+        alt: 'PlayStation 5',
+        link: '/product/4'
     },
     {
         id: 2,
         image: god,
         title: 'God of War Ragnarök',
         description: 'Acompaña a Kratos y Atreus en su viaje épico.',
-        alt: 'God of War Ragnarök'
+        alt: 'God of War Ragnarök',
+        link: '/product/5'
     }
 ];
 
@@ -54,7 +57,9 @@ function Home() {
                     <div className="carousel-inner">
                         {carouselSlides.map((slide, index) => (
                             <div key={slide.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                                <img src={slide.image} className="d-block w-100" alt={slide.alt} />
+                                <Link to={slide.link}>
+                                    <img src={slide.image} className="d-block w-100" alt={slide.alt} />
+                                </Link>
                                 {slide.title && (
                                     <div className='carousel-caption d-none d-md-block position-absolute top-p start-0 text-start m-3 p-1 bg-dark bg-opacity-50 rounded w-50'>
                                         <h5>{slide.title}</h5>
