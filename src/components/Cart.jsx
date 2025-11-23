@@ -58,6 +58,7 @@ export const Cart = () => {
                                     <button
                                         className="btn btn-sm btn-outline-secondary"
                                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                        disabled={item.quantity >= item.stock}
                                     >
                                         +
                                     </button>
