@@ -1,5 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
+import { ProductProvider } from './context/ProductContext';
+import { ToastProvider } from './context/ToastContext';
 import Home from './components/Home';
 import Login from './components/Login';
 import Contact from './components/Contact';
@@ -10,6 +12,7 @@ import { Checkout } from './components/Checkout';
 import VistaAdmin from './components/VistaAdmin';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import Register from './components/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
@@ -21,22 +24,27 @@ function App() {
   const isAdminRoute = location.pathname === ('/vistaadmin');
   return (
     <CartProvider>
-        <div className="app">
-          {!isAdminRoute && <Header />}
-          <main className="main-content">
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/products' element={<Products />} />
-              <Route path='/product/:id' element={<ProductDetail />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/checkout' element={<Checkout />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/contact' element={<Contact />} />
-              <Route path='/vistaadmin' element={<VistaAdmin />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+      <ProductProvider>
+        <ToastProvider>
+          <div className="app">
+            {!isAdminRoute && <Header />}
+            <main className="main-content">
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/products' element={<Products />} />
+                <Route path='/product/:id' element={<ProductDetail />} />
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/checkout' element={<Checkout />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/vistaadmin' element={<VistaAdmin />} />
+                <Route path='/register' element={<Register />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </ToastProvider>
+      </ProductProvider>
     </CartProvider>
   );
 }

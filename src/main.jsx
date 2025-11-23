@@ -6,10 +6,19 @@ import './assets/css/styles.css';
 import App from './App.jsx'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
+import { ProductProvider } from './context/ProductContext.jsx';
+import { CartProvider } from './context/CartContext.jsx';
+import { ToastProvider } from './context/ToastContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />
+    <ProductProvider>
+      <CartProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </CartProvider>
+    </ProductProvider>
   </BrowserRouter>
 );
 
