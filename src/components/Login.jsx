@@ -49,37 +49,37 @@ function Login() {
 
     return (
         <div>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center pb-4">
                 <img src={Logo} className='img-fluid' style={{ width: '17.5%', height: 'auto' }} alt='Imagen' />
             </div>
 
             <div className="d-flex justify-content-center align-items-center vh-10">
-                <form onSubmit={handleSubmit} style={{ color: "#ea39b8", width: '500px', minHeight: '500px' }} noValidate>
-                    <fieldset>
-                        <div className="d-flex justify-content-end">
-                            <Link className='btn btn-primary' to='/'>X</Link>
-                        </div>
-                        <legend className="text-center">Inicio Sesión</legend>
+                <form onSubmit={handleSubmit} style={{ width: '500px', minHeight: '500px'}} noValidate>
+                    <fieldset className='card rounded-4' style={{background: '#16213e', borderColor: '#091521c0' }}>
+                        <legend className="text-center pt-4" style={{color: '#f8f9fa'}}>Inicio Sesión</legend>
 
-                        <div className="mb-3">
-                            <label htmlFor="emailInput" className="form-label" style={{color: "#ea39b8"}}>Correo</label>
-                            <input type="email" name="email" className={`form-control ${touched.email && (isEmailValid ? 'is-valid' : 'is-invalid')}`} id='emailInput' value={email} onChange={handleChange} onBlur={handleBlur} placeholder="Ingrese su correo" required />
-                            {touched.email && !isEmailValid && <div className="invalid-feedback d-block">Por favor, ingrese un correo electrónico válido.</div>}
-                            {touched.email && isEmailValid && <div className="valid-feedback d-block">¡Correo electrónico válido!</div>}
-                            <small className="form-text text-muted">No se compartiran tus datos.</small>
+                        <div className="mb-4">
+                            <label htmlFor="emailInput" className="form-label mb-3" style={{color: "#f8f9fa", marginLeft: '15px'}}>Correo</label>
+                            <input type="email" name="email" style={{marginLeft: '15px', width: '465px'}} className={`form-control ${touched.email && (isEmailValid ? 'is-valid' : 'is-invalid')} rounded-4`} id='emailInput' value={email} onChange={handleChange} onBlur={handleBlur} placeholder="Ingrese su correo" required />
+                            {touched.email && !isEmailValid && <div className="invalid-feedback d-block" style={{marginLeft: '15px'}}>Por favor, ingrese un correo electrónico válido.</div>}
+                            {touched.email && isEmailValid && <div className="valid-feedback d-block" style={{marginLeft: '15px'}}>¡Correo electrónico válido!</div>}
                         </div>
 
-                        <div class="mb-3">
-                            <label htmlFor="passwordInput" className="form-label" style={{color: "#ea39b8"}}>Contraseña</label>
-                            <input type="password" name="password" id="passwordInput" className={`form-control ${touched.password && (isPasswordValid ? 'is-valid' : 'is-invalid')}`} placeholder="Ingrese su contraseña" value={password} onChange={handleChange} onBlur={handleBlur} required autoComplete='off' />
-                            <div className="invalid-feedback">La contraseña debe tener al menos 8 caracteres, una
+                        <div class="mb-4">
+                            <label htmlFor="passwordInput" className="form-label mb-3" style={{color: "#f8f9fa", marginLeft: '15px'}}>Contraseña</label>
+                            <input type="password" name="password" id="passwordInput" style={{marginLeft: '15px', width: '465px'}} className={`form-control ${touched.password && (isPasswordValid ? 'is-valid' : 'is-invalid')} rounded-4`} placeholder="Ingrese su contraseña" value={password} onChange={handleChange} onBlur={handleBlur} required autoComplete='off' />
+                            <div className="invalid-feedback" style={{marginLeft: '15px'}}>La contraseña debe tener al menos 8 caracteres, una
                                 mayúscula, un número y un carácter especial.</div>
-                            <div className="valid-feedback">¡Contraseña válida!</div>
+                            <div className="valid-feedback" style={{marginLeft: '15px'}}>¡Contraseña válida!</div>
                         </div>
 
-                        <button type="submit" className="btn btn-primary w-100 mb-3" id="submitButton" disabled={!isFormValid}>Iniciar Sesión</button>
-
+                        <div className='text-center'>
+                            <button type="submit" className="btn btn-primary w-50 mb-4 rounded-3" id="submitButton" disabled={!isFormValid}>Iniciar Sesión</button>
+                        </div>
                     </fieldset>
+                    <div className='text-center mt-3'>
+                        <p>¿No tienes una cuenta Levelup? <Link to="/register">Regístrate aquí</Link></p>
+                    </div>
                 </form>
             </div>
         </div>
