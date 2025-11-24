@@ -75,9 +75,9 @@ export const Products = () => {
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
                             <option value="all">Todas</option>
-                            <option value="consolas">Consolas</option>
-                            <option value="juegos">Juegos</option>
-                            <option value="accesorios">Accesorios</option>
+                            <option value="Consolas">Consolas</option>
+                            <option value="Juegos">Juegos</option>
+                            <option value="Accesorios">Accesorios</option>
                         </select>
                     </div>
 

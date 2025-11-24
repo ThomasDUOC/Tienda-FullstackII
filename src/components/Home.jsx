@@ -85,17 +85,17 @@ function Home() {
                 <div className="container">
                     <h2 className="section-title">Explora por Categoría</h2>
                     <div className="categories-grid">
-                        <Link to="/products?category=consolas" className="category-card">
+                        <Link to="/products?category=Consolas" className="category-card">
                             <i className="bi bi-controller"></i>
                             <h3>Consolas</h3>
                             <p>PlayStation, Xbox, Nintendo Switch</p>
                         </Link>
-                        <Link to="/products?category=juegos" className="category-card">
+                        <Link to="/products?category=Juegos" className="category-card">
                             <i className="bi bi-disc"></i>
                             <h3>Juegos</h3>
                             <p>Los últimos lanzamientos</p>
                         </Link>
-                        <Link to="/products?category=accesorios" className="category-card">
+                        <Link to="/products?category=Accesorios" className="category-card">
                             <i className="bi bi-headset"></i>
                             <h3>Accesorios</h3>
                             <p>Controles, auriculares y más</p>
