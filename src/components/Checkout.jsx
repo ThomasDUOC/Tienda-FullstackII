@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { datosRegiones } from '../data/regiones';
 import '../assets/css/checkout.css';
 
 export const Checkout = () => {
@@ -13,19 +14,36 @@ export const Checkout = () => {
         email: '',
         phone: '',
         address: '',
-        city: '',
-        postalCode: '',
+        region: '',
+        comuna: '',
         cardNumber: '',
         cardName: '',
         expiryDate: '',
         cvv: ''
     });
 
+    const [comunasDispo, setComunasDispo] = useState([]);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+    const handleRegionChange = (e) => {
+        const regionKey = e.target.value;
+        setFormData({
+            ...formData,
+            region: regionKey,
+            comuna: ''
+        });
+
+        if (regionKey && datosRegiones[regionKey]) {
+            setComunasDispo(datosRegiones[regionKey].comunas);
+        } else {
+            setComunasDispo([]);
+        }
     };
 
     const handleSubmit = (e) => {
@@ -131,28 +149,34 @@ export const Checkout = () => {
                                 <div className="row">
                                     <div className="col-md-8">
                                         <div className="mb-3">
-                                            <label className="form-label">Ciudad *</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="city"
-                                                value={formData.city}
-                                                onChange={handleChange}
+                                            <label className="form-label">Región *</label>
+                                            <select
+                                                className="form-select"
+                                                name="region"
+                                                value={formData.region}
+                                                onChange={handleRegionChange}
                                                 required
-                                            />
+                                            >
+                                                <option value="">Seleccione región</option>
+                                                {Object.keys(datosRegiones).map((key) => (
+                                                    <option key={key} value={key}>
+                                                        {datosRegiones[key].nombre}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <div className="mb-3">
-                                            <label className="form-label">Código Postal *</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="postalCode"
-                                                value={formData.postalCode}
-                                                onChange={handleChange}
-                                                required
-                                            />
+                                    <div className='col-mb-6'>
+                                        <div className='mb-3'>
+                                            <label className='form-label'>Comuna *</label>
+                                            <select className='form-select' name='comuna' value={formData.comuna} onChange={handleChange} required disabled={!formData.region}>
+                                                <option value=''>Seleccione comuna</option>
+                                                {comunasDispo.map((comuna, index) => (
+                                                    <option key={index} value={comuna}>
+                                                        {comuna}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
