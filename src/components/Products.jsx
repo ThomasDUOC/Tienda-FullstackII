@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { products, getProductsByCategory, getProductsByPlatform } from '../data/products';
 import { ProductCard } from './ProductCard';
+import { useProducts } from '../context/ProductContext';
 import '../assets/css/products.css';
 
 export const Products = () => {
+    const { products } = useProducts()
     const [searchParams] = useSearchParams();
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -30,6 +32,13 @@ export const Products = () => {
         // filtrar plataforma
         if (selectedPlatform !== 'all') {
             result = result.filter(p => p.platform === selectedPlatform);
+        }
+
+        const query = searchParams.get('search');
+        if (query) {
+            result = result.filter(p =>
+                p.name.toLowerCase().includes(query.toLowerCase())
+            );
         }
 
         // sortear
