@@ -3,7 +3,7 @@ export const products = [
     {
         id: 1,
         name: 'PlayStation 5',
-        category: 'consolas',
+        category: 'Consolas',
         price: '700.000',
         image: '/src/assets/images/PS5Digital.png',
         description: 'La consola de nueva generación de Sony con gráficos 4K y velocidades ultrarrápidas.',
@@ -12,18 +12,18 @@ export const products = [
         specs: {
             cpu: 'AMD Zen 2, 8 núcleos a 3.5 GHz',
             gpu: 'AMD RDNA 2, 10.28 TFLOPS',
-            memory: '16GB GDDR6',
-            storage: '825GB SSD',
-            resolution: 'Hasta 4K a 120Hz',
-            connectivity: 'WiFi 6, Bluetooth 5.1, USB-C',
-            weight: '4.5 kg',
-            dimensions: '390mm x 104mm x 260mm'
+            memoria: '16GB GDDR6',
+            almacenamiento: '825GB SSD',
+            resolución: 'Hasta 4K a 120Hz',
+            conectividad: 'WiFi 6, Bluetooth 5.1, USB-C',
+            peso: '4.5 kg',
+            dimensiones: '390mm x 104mm x 260mm'
         }
     },
     {
         id: 2,
         name: 'Xbox Series X',
-        category: 'consolas',
+        category: 'Consolas',
         price: '500.000',
         image: '/src/assets/images/XboxSeriesX.png',
         description: 'La consola más potente de Xbox con compatibilidad total hacia atrás.',
@@ -32,37 +32,37 @@ export const products = [
         specs: {
             cpu: 'AMD Zen 2, 8 núcleos a 3.8 GHz',
             gpu: 'AMD RDNA 2, 12 TFLOPS',
-            memory: '16GB GDDR6',
-            storage: '1TB SSD NVMe',
-            resolution: 'Hasta 4K a 120Hz',
-            connectivity: 'WiFi 5, Bluetooth 5.1, HDMI 2.1',
-            weight: '4.45 kg',
-            dimensions: '301mm x 151mm x 151mm'
+            memoria: '16GB GDDR6',
+            almacenamiento: '1TB SSD NVMe',
+            resolucion: 'Hasta 4K a 120Hz',
+            conectividad: 'WiFi 5, Bluetooth 5.1, HDMI 2.1',
+            peso: '4.45 kg',
+            dimensiones: '301mm x 151mm x 151mm'
         }
     },
     {
         id: 3,
         name: 'Nintendo Switch OLED',
-        category: 'consolas',
+        category: 'Consolas',
         price: '350.000',
         image: '/src/assets/images/SwitchOLED.webp',
         description: 'La versión mejorada de Nintendo Switch con pantalla OLED de 7 pulgadas.',
         stock: 20,
         featured: true,
         specs: {
-            screen: 'OLED de 7 pulgadas',
-            resolution: '1280 x 720 (portátil), 1920 x 1080 (TV)',
-            storage: '64GB interna',
-            battery: '4.5 - 9 horas',
-            connectivity: 'WiFi, Bluetooth 4.1',
-            weight: '320g (consola), 422g (con Joy-Cons)',
-            dimensions: '242mm x 103mm x 13.9mm'
+            pantalla: 'OLED de 7 pulgadas',
+            resolucion: '1280 x 720 (portátil), 1920 x 1080 (TV)',
+            almacenamiento: '64GB interna',
+            bateria: '4.5 - 9 horas',
+            conectividad: 'WiFi, Bluetooth 4.1',
+            peso: '320g (consola), 422g (con Joy-Cons)',
+            dimensiones: '242mm x 103mm x 13.9mm'
         }
     },
     {
         id: 4,
         name: 'PlayStation 4 Pro',
-        category: 'consolas',
+        category: 'Consolas',
         price: '400.000',
         image: '/src/assets/images/PS4Pro.webp',
         description: 'La versión mejorada de PlayStation 4 con soporte 4K.',
@@ -71,12 +71,12 @@ export const products = [
         specs: {
             cpu: 'AMD Jaguar, 8 núcleos a 2.1 GHz',
             gpu: '4.20 TFLOPS',
-            memory: '8GB GDDR5',
-            storage: '1TB HDD',
-            resolution: 'Hasta 4K',
-            connectivity: 'WiFi, Bluetooth 4.0',
-            weight: '3.3 kg',
-            dimensions: '295mm x 55mm x 327mm'
+            memoria: '8GB GDDR5',
+            almacenamiento: '1TB HDD',
+            resolucion: 'Hasta 4K',
+            conectividad: 'WiFi, Bluetooth 4.0',
+            peso: '3.3 kg',
+            dimensiones: '295mm x 55mm x 327mm'
         }
     },
 
@@ -84,7 +84,7 @@ export const products = [
     {
         id: 5,
         name: 'God of War Ragnarök',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'PlayStation',
         price: '70.000',
         image: '/src/assets/images/GoWRPS4.jpg',
@@ -92,20 +92,20 @@ export const products = [
         stock: 30,
         featured: true,
         specs: {
-            platform: 'PS4',
-            genre: 'Acción, Aventura',
-            players: '1 jugador',
-            developer: 'Santa Monica Studio',
-            publisher: 'Sony Interactive Entertainment',
-            releaseDate: '2022',
-            rating: 'M (17+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'PS4',
+            genero: 'Acción, Aventura',
+            jugadores: '1 jugador',
+            desarrollador: 'Santa Monica Studio',
+            editor: 'Sony Interactive Entertainment',
+            añoDeLanzamiento: '2022',
+            clasificacion: 'M (17+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 6,
         name: 'Spider-Man 2',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'PlayStation',
         price: '70.000',
         image: '/src/assets/images/Spiderman2.webp',
@@ -113,20 +113,20 @@ export const products = [
         stock: 25,
         featured: true,
         specs: {
-            platform: 'PS5',
-            genre: 'Acción, Aventura',
-            players: '1 jugador',
-            developer: 'Insomniac Games',
-            publisher: 'Sony Interactive Entertainment',
-            releaseDate: '2023',
-            rating: 'T (13+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'PS5',
+            genero: 'Acción, Aventura',
+            jugadores: '1 jugador',
+            desarrollador: 'Insomniac Games',
+            editor: 'Sony Interactive Entertainment',
+            añoDeLanzamiento: '2023',
+            clasificacion: 'T (13+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 7,
         name: 'Horizon Forbidden West',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'PlayStation',
         price: '70.000',
         image: '/src/assets/images/HorizonFWPS4.jpg',
@@ -134,20 +134,20 @@ export const products = [
         stock: 18,
         featured: false,
         specs: {
-            platform: 'PS4',
-            genre: 'Acción, RPG',
-            players: '1 jugador',
-            developer: 'Guerrilla Games',
-            publisher: 'Sony Interactive Entertainment',
-            releaseDate: '2022',
-            rating: 'T (13+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'PS4',
+            genero: 'Acción, RPG',
+            jugadores: '1 jugador',
+            desarrollador: 'Guerrilla Games',
+            editor: 'Sony Interactive Entertainment',
+            añoDeLanzamiento: '2022',
+            clasificacion: 'T (13+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 8,
         name: 'The Last of Us Part II',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'PlayStation',
         price: '70.000',
         image: '/src/assets/images/TLoU2PS4.webp',
@@ -155,14 +155,14 @@ export const products = [
         stock: 22,
         featured: false,
         specs: {
-            platform: 'PS5, PS4',
-            genre: 'Acción, Aventura',
-            players: '1 jugador',
-            developer: 'Naughty Dog',
-            publisher: 'Sony Interactive Entertainment',
-            releaseDate: '2020',
-            rating: 'M (17+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'PS5, PS4',
+            genero: 'Acción, Aventura',
+            jugadores: '1 jugador',
+            desarrollador: 'Naughty Dog',
+            editor: 'Sony Interactive Entertainment',
+            añoDeLanzamiento: '2020',
+            clasificacion: 'M (17+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
 
@@ -170,7 +170,7 @@ export const products = [
     {
         id: 9,
         name: 'Halo Infinite',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Xbox',
         price: '60.000',
         image: '/src/assets/images/HInfiniteXSX.webp',
@@ -178,20 +178,20 @@ export const products = [
         stock: 20,
         featured: false,
         specs: {
-            platform: 'Xbox Series X|S, Xbox One, PC',
-            genre: 'FPS, Acción',
-            players: '1 jugador (campaña), Multijugador',
-            developer: '343 Industries',
-            publisher: 'Xbox Game Studios',
-            releaseDate: '2021',
-            rating: 'T (13+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Xbox Series X|S, Xbox One, PC',
+            genero: 'FPS, Acción',
+            jugadores: '1 jugador (campaña), Multijugador',
+            desarrollador: '343 Industries',
+            editor: 'Xbox Game Studios',
+            añoDeLanzamiento: '2021',
+            clasificacion: 'T (13+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 10,
         name: 'Forza Horizon 5',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Xbox',
         price: '60.000',
         image: '/src/assets/images/ForzaHorizon5XSX.webp',
@@ -199,20 +199,20 @@ export const products = [
         stock: 15,
         featured: true,
         specs: {
-            platform: 'Xbox Series X|S, Xbox One, PC',
-            genre: 'Carreras, Arcade',
-            players: '1 jugador, Multijugador',
-            developer: 'Playground Games',
-            publisher: 'Xbox Game Studios',
-            releaseDate: '2021',
-            rating: 'E (Para todos)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Xbox Series X|S, Xbox One, PC',
+            genero: 'Carreras, Arcade',
+            jugadores: '1 jugador, Multijugador',
+            desarrollador: 'Playground Games',
+            editor: 'Xbox Game Studios',
+            añoDeLanzamiento: '2021',
+            clasificacion: 'E (Para todos)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 11,
         name: 'Starfield',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Xbox',
         price: '70.000',
         image: '/src/assets/images/Starfield.jpg',
@@ -220,14 +220,14 @@ export const products = [
         stock: 28,
         featured: true,
         specs: {
-            platform: 'Xbox Series X|S, PC',
-            genre: 'RPG, Acción',
-            players: '1 jugador',
-            developer: 'Bethesda Game Studios',
-            publisher: 'Bethesda Softworks',
-            releaseDate: '2023',
-            rating: 'M (17+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Xbox Series X|S, PC',
+            genero: 'RPG, Acción',
+            jugadores: '1 jugador',
+            desarrollador: 'Bethesda Game Studios',
+            editor: 'Bethesda Softworks',
+            añoDeLanzamiento: '2023',
+            clasificacion: 'M (17+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
 
@@ -235,7 +235,7 @@ export const products = [
     {
         id: 12,
         name: 'The Legend of Zelda: Tears of the Kingdom',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Nintendo',
         price: '70.000',
         image: '/src/assets/images/ToTK.jpg',
@@ -243,20 +243,20 @@ export const products = [
         stock: 35,
         featured: true,
         specs: {
-            platform: 'Nintendo Switch',
-            genre: 'Acción, Aventura',
-            players: '1 jugador',
-            developer: 'Nintendo EPD',
-            publisher: 'Nintendo',
-            releaseDate: '2023',
-            rating: 'E10+ (10+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Nintendo Switch',
+            genero: 'Acción, Aventura',
+            jugadores: '1 jugador',
+            desarrollador: 'Nintendo EPD',
+            editor: 'Nintendo',
+            añoDeLanzamiento: '2023',
+            clasificacion: 'E10+ (10+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 13,
         name: 'Super Mario Odyssey',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Nintendo',
         price: '60.000',
         image: '/src/assets/images/SMOdyssey.webp',
@@ -264,20 +264,20 @@ export const products = [
         stock: 24,
         featured: false,
         specs: {
-            platform: 'Nintendo Switch',
-            genre: 'Plataformas, Aventura',
-            players: '1-2 jugadores',
-            developer: 'Nintendo EPD',
-            publisher: 'Nintendo',
-            releaseDate: '2017',
-            rating: 'E10+ (10+)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Nintendo Switch',
+            genero: 'Plataformas, Aventura',
+            jugadores: '1-2 jugadores',
+            desarrollador: 'Nintendo EPD',
+            editor: 'Nintendo',
+            añoDeLanzamiento: '2017',
+            clasificacion: 'E10+ (10+)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
     {
         id: 14,
         name: 'Pokémon Scarlet',
-        category: 'juegos',
+        category: 'Juegos',
         platform: 'Nintendo',
         price: '70.000',
         image: '/src/assets/images/PKMNScarlet.webp',
@@ -285,14 +285,14 @@ export const products = [
         stock: 30,
         featured: false,
         specs: {
-            platform: 'Nintendo Switch',
-            genre: 'RPG, Aventura',
-            players: '1 jugador, Multijugador',
-            developer: 'Game Freak',
-            publisher: 'Nintendo',
-            releaseDate: '2022',
-            rating: 'E (Para todos)',
-            languages: 'Español, Inglés, y más'
+            plataforma: 'Nintendo Switch',
+            genero: 'RPG, Aventura',
+            jugadores: '1 jugador, Multijugador',
+            desarrollador: 'Game Freak',
+            editor: 'Nintendo',
+            añoDeLanzamiento: '2022',
+            clasificacion: 'E (Para todos)',
+            idiomas: 'Español, Inglés, y más'
         }
     },
 
@@ -300,115 +300,115 @@ export const products = [
     {
         id: 15,
         name: 'DualSense Wireless Controller',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '70.000',
         image: '/src/assets/images/dualsense.webp',
         description: 'El innovador controlador de PS5 con retroalimentación háptica.',
         stock: 40,
         featured: false,
         specs: {
-            compatibility: 'PS5, PC',
-            connectivity: 'Bluetooth, USB-C',
-            battery: 'Hasta 12 horas',
-            features: 'Retroalimentación háptica, Gatillos adaptativos, Micrófono integrado',
-            weight: '280g',
-            dimensions: '160mm x 66mm x 106mm',
-            colors: 'Blanco, Negro, Rojo, Azul'
+            compatibilidad: 'PS5, PC',
+            conectividad: 'Bluetooth, USB-C',
+            batería: 'Hasta 12 horas',
+            caracteristicas: 'Retroalimentación háptica, Gatillos adaptativos, Micrófono integrado',
+            peso: '280g',
+            dimensiones: '160mm x 66mm x 106mm',
+            colores: 'Blanco, Negro, Rojo, Azul'
         }
     },
     {
         id: 16,
         name: 'Xbox Wireless Controller - Robot White',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '60.000',
         image: '/src/assets/images/xboxcontrollerwhite.webp',
         description: 'Control inalámbrico para Xbox con agarre texturizado.',
         stock: 35,
         featured: false,
         specs: {
-            compatibility: 'Xbox Series X|S, Xbox One, PC',
-            connectivity: 'Bluetooth, USB-C',
-            battery: 'Hasta 40 horas (con pilas AA)',
-            features: 'Botón Share, Puerto de 3.5mm, Agarre texturizado',
-            weight: '287g (sin pilas)',
-            dimensions: '154mm x 106mm x 60mm',
-            colors: 'Blanco'
+            compatibilidad: 'Xbox Series X|S, Xbox One, PC',
+            conectividad: 'Bluetooth, USB-C',
+            batería: 'Hasta 40 horas (con pilas AA)',
+            caracteristicas: 'Botón Share, Puerto de 3.5mm, Agarre texturizado',
+            peso: '287g (sin pilas)',
+            dimensiones: '154mm x 106mm x 60mm',
+            colores: 'Blanco'
         }
     },
     {
         id: 17,
         name: 'Nintendo Switch Pro Controller',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '70.000',
         image: '/src/assets/images/SwitchProController1.jfif',
         description: 'Control profesional para Nintendo Switch.',
         stock: 25,
         featured: false,
         specs: {
-            compatibility: 'Nintendo Switch',
-            connectivity: 'Bluetooth, USB-C',
-            battery: 'Hasta 40 horas',
-            features: 'Giroscopio, HD Rumble, NFC',
-            weight: '246g',
-            dimensions: '152mm x 106mm x 60mm',
-            colors: 'Negro'
+            compatibilidad: 'Nintendo Switch',
+            conectividad: 'Bluetooth, USB-C',
+            batería: 'Hasta 40 horas',
+            caracteristicas: 'Giroscopio, HD Rumble, NFC',
+            peso: '246g',
+            dimensiones: '152mm x 106mm x 60mm',
+            colores: 'Negro'
         }
     },
     {
         id: 18,
         name: 'PlayStation 5 Headset',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '100.000',
         image: '/src/assets/images/pulse_elite_1.jpg',
         description: 'Auriculares inalámbricos con audio 3D Tempest.',
         stock: 18,
         featured: false,
         specs: {
-            compatibility: 'PS5, PS4, PC',
-            connectivity: 'USB-C inalámbrico, 3.5mm',
-            battery: 'Hasta 12 horas',
-            features: 'Audio 3D Tempest, Cancelación de ruido, Micrófono bidireccional',
-            weight: '292g',
+            compatibilidad: 'PS5, PS4, PC',
+            conectividad: 'USB-C inalámbrico, 3.5mm',
+            batería: 'Hasta 12 horas',
+            caracteristicas: 'Audio 3D Tempest, Cancelación de ruido, Micrófono bidireccional',
+            peso: '292g',
             drivers: '40mm',
-            frequency: '20Hz - 20,000Hz'
+            frecuencia: '20Hz - 20,000Hz'
         }
     },
     {
         id: 19,
         name: 'Razer Gaming Keyboard Blackwidow V4 X',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '130.000',
         image: '/src/assets/images/BlackwidowV4X.webp',
         description: 'Teclado mecánico gaming con iluminación RGB.',
         stock: 12,
         featured: false,
         specs: {
-            compatibility: 'PC, Mac',
-            connectivity: 'USB 2.0',
+            compatibilidad: 'PC, Mac',
+            conectividad: 'USB 2.0',
             switches: 'Razer Green Mechanical',
-            features: 'RGB Chroma, Anti-ghosting, Reposamuñecas magnético',
-            weight: '1.3kg',
-            dimensions: '448mm x 155mm x 42mm',
-            layout: 'QWERTY (Español/Inglés)'
+            caracteristicas: 'RGB Chroma, Anti-ghosting, Reposamuñecas magnético',
+            peso: '1.3kg',
+            dimensiones: '448mm x 155mm x 42mm',
+            distribución: 'QWERTY (Español/Inglés)'
         }
     },
     {
         id: 20,
         name: 'Logitech Gaming Mouse G203',
-        category: 'accesorios',
+        category: 'Accesorios',
         price: '80.000',
         image: '/src/assets/images/G203.webp',
         description: 'Ratón gaming de alta precisión con sensor óptico.',
         stock: 22,
         featured: false,
         specs: {
-            compatibility: 'PC, Mac',
-            connectivity: 'USB, Wireless 2.4GHz',
+            compatibilidad: 'PC, Mac',
+            conectividad: 'USB, Wireless 2.4GHz',
             sensor: 'HERO 25K (hasta 25,600 DPI)',
-            battery: 'Hasta 60 horas',
-            features: '6 botones programables, RGB LIGHTSYNC, Peso ajustable',
-            weight: '107g (sin cable)',
-            dimensions: '130mm x 67mm x 40mm'
+            batería: 'Hasta 60 horas',
+            caracteristicas: '6 botones programables, RGB LIGHTSYNC, Peso ajustable',
+            peso: '107g (sin cable)',
+            dimensiones: '130mm x 67mm x 40mm'
         }
     }
 ];
