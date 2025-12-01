@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { products, getProductsByCategory, getProductsByPlatform } from '../data/products';
+import { products, getProductsByPlatform } from '../data/products';
 import { ProductCard } from './ProductCard';
 import { useProducts } from '../context/ProductContext';
 import '../assets/css/products.css';
@@ -14,11 +14,12 @@ export const Products = () => {
     const [sortBy, setSortBy] = useState('name');
 
     useEffect(() => {
-        const category = searchParams.get('category');
-        const platform = searchParams.get('platform');
+        let result = [...products];
 
-        if (category) setSelectedCategory(category);
-        if (platform) setSelectedPlatform(platform);
+        // filtrar categoria (MANUALMENTE, ya no usamos la función importada)
+        if (selectedCategory !== 'all') {
+            result = result.filter(p => p.category === selectedCategory);
+        }
     }, [searchParams]);
 
     useEffect(() => {

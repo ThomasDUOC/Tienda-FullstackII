@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/images/Level-Up-Logo.png';
 import { validateEmail, validatePassword, validateNombre, validateRut } from '../assets/js/validators.js'; // Asegúrate de que esta ruta sea correcta
+import { authService } from '../services/authService';
 
 function Register() {
     const navigate = useNavigate();
@@ -12,15 +13,12 @@ function Register() {
         password: '',
         confirmPassword: '',
         rut: '',
+        telefono: '',
+        direccion: ''
     });
 
-    const [touched, setTouched] = useState({
-        nombre: false,
-        email: false,
-        password: false,
-        confirmPassword: false,
-        rut: false
-    });
+    const [touched, setTouched] = useState({});
+    const [serverError, setServerError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,7 +33,7 @@ function Register() {
         setTouched(prev => ({ ...prev, [name]: true }));
     };
 
-    const { nombre, email, password, confirmPassword, rut } = formData;
+    const { nombre, email, password, confirmPassword, rut, telefono, direccion } = formData;
 
     const isNombreValid = validateNombre(nombre);
     const isEmailValid = validateEmail(email);
@@ -45,13 +43,20 @@ function Register() {
 
     const isFormValid = isNombreValid && isEmailValid && isPasswordValid && isConfirmPasswordValid && isRutValid;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Lógica de registro (por ahora solo un console.log)
+        setServerError('');
+
         if (isFormValid) {
-            console.log('Formulario de registro enviado');
-            // Aquí rediriges al login
-            navigate('/login');
+            try {
+                await authService.register(formData);
+                console.log('Registro exitoso');
+                navigate('/login');
+            } catch (error) {
+                console.error(error);
+                // Muestra el error que venga del backend si existe
+                setServerError('Error al registrar usuario. Intente nuevamente.');
+            }
         }
     };
 
@@ -65,6 +70,9 @@ function Register() {
                 <form onSubmit={handleSubmit} style={{ width: '500px' }} noValidate>
                     <fieldset className='card rounded-4' style={{background: '#16213e', borderColor: '#091521c0' }}>
                         <legend className="text-center pt-4" style={{color: '#f8f9fa'}}>Registro</legend>
+
+                        {serverError && <div className="alert alert-danger mx-3">{serverError}</div>}
+                        
                         <div className='mb-4'>
                             <label htmlFor="nombreInput" className="form-label mb-3" style={{color: "#f8f9fa", marginLeft: '15px'}}>Nombre</label>
                             <input 

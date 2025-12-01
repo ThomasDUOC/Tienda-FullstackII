@@ -68,7 +68,7 @@ function VistaAdmin() {
                         <i className="bi bi-person-fill"></i>
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li className="dropdown-item" >Mi Perfil</li>
+                        <li className="ms-3">Mi Perfil</li>
                         <li><Link className="dropdown-item" to='/login'>Cerrar Sesión</Link></li>
                     </ul>
                 </div>

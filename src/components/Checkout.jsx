@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { datosRegiones } from '../data/regiones';
+import { pedidoService } from '../services/pedidoService';
 import '../assets/css/checkout.css';
 
 export const Checkout = () => {
@@ -24,7 +25,7 @@ export const Checkout = () => {
 
     const [comunasDispo, setComunasDispo] = useState([]);
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -46,14 +47,50 @@ export const Checkout = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const userId = localStorage.getItem('userId');
         // sim de pago
-        alert('¡Pedido realizado con éxito! Recibirás un email de confirmación.');
-        clearCart();
-        navigate('/');
-    };
+        if (!userId) {
+            alert('Debes iniciar sesion para finalizar la compra.');
+            navigate('/login');
+            return;
+        }
+
+        try {
+            // 2. Construir el objeto PedidoRequest para Java
+                const orderPayload = {
+                    idUsuario: parseInt(userId),
+                    nombre: formData.firstName,
+                    apellido: formData.lastName,
+                    email: formData.email,
+                    telefono: formData.phone,
+                    direccion: formData.address,
+                    region: datosRegiones[formData.region]?.nombre || formData.region,
+                    comuna: formData.comuna,
+                    items: cartItems.map(item => ({
+                        idProducto: item.id,
+                        cantidad: item.quantity,
+                        // Convertimos el precio formateado "$ 50.000" a número 50000
+                        precio: typeof item.price === 'string' 
+                                ? parseInt(item.price.replace(/\./g, '').replace('$', '').trim()) 
+                                : item.price
+                    }))
+                };
+
+                await pedidoService.createPedido(orderPayload);
+
+                alert('¡Pedido realizado con éxito! ID guardado en base de datos.');
+                clearCart();
+                navigate('/');
+                
+            } catch (error) {
+                console.error("Error en checkout:", error);
+                // Mostrar mensaje de error del backend si existe (ej: "Stock insuficiente")
+                alert("Error al procesar el pedido: " + (error.response?.data || error.message));
+            }
+        };
 
     const calculateItemTotal = (item) => {
         const price = parseFloat(item.price.replace('.', ''));
