@@ -68,6 +68,20 @@ export const ProductProvider = ({ children }) => {
         }
     };
 
+    const addProduct = (newProduct) => {
+        const productWithId = {
+            ...newProduct,
+            id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
+            stock: parseInt(newProduct.stock) || 0,
+            featured: newProduct.featured || false,
+            specs: newProduct.specs || {}
+        };
+
+        const updatedProducts = [...products, productWithId];
+        setProducts(updatedProducts);
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
+    };
+
     return (
         <ProductContext.Provider value={{ products, updateStock, loading }}>
             {children}
