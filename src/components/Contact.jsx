@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { useToast } from '../context/ToastContext';
 import '../assets/css/contact.css';
 
 function Contact() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-    });
 
-    const [submitted, setSubmitted] = useState(false);
+    const { showToast } = useToast();
+    const [loading, setLoading] = useState(false);
+
+    const [formData, setFormData] = useState({
+        nombre: '',
+        email: '',
+        telefono: '',
+        asunto: '',
+        mensaje: ''
+    });
 
     const handleChange = (e) => {
         setFormData({
@@ -19,23 +23,31 @@ function Contact() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // sim formulario
-        console.log('Contact form submitted:', formData);
-        setSubmitted(true);
+        setLoading(true);
 
-        // formulario resetear
-        setTimeout(() => {
+        try {
+            // Llamada directa con Axios (o usa el servicio si lo creaste)
+            await axios.post('http://localhost:8080/api/v1/contacto', formData);
+            
+            showToast('¡Mensaje enviado! Te responderemos pronto.', 'success');
+            
+            // Limpiar formulario
             setFormData({
-                name: '',
+                nombre: '',
                 email: '',
-                phone: '',
-                subject: '',
-                message: ''
+                telefono: '',
+                asunto: '',
+                mensaje: ''
             });
-            setSubmitted(false);
-        }, 3000);
+
+        } catch (error) {
+            console.error("Error al enviar mensaje:", error);
+            showToast('Hubo un error al enviar el mensaje. Intenta más tarde.', 'error');
+        } finally {
+            setLoading(false); // Desactivar carga siempre
+        }
     };
 
     return (
@@ -100,25 +112,19 @@ function Contact() {
                     <div className="contact-form-container">
                         <h2>Envíanos un Mensaje</h2>
 
-                        {submitted && (
-                            <div className="alert alert-success">
-                                <i className="bi bi-check-circle-fill"></i>
-                                ¡Mensaje enviado con éxito! Te responderemos pronto.
-                            </div>
-                        )}
-
                         <form onSubmit={handleSubmit} className="contact-form">
                             <div className="form-group">
-                                <label htmlFor="name">Nombre Completo *</label>
+                                <label htmlFor="nombre">Nombre Completo *</label>
                                 <input
                                     type="text"
-                                    id="name"
-                                    name="name"
+                                    id="nombre"
+                                    name="nombre"
                                     className="form-control"
-                                    value={formData.name}
+                                    value={formData.nombre}
                                     onChange={handleChange}
                                     required
                                     placeholder="Tu nombre completo"
+                                    disabled={loading}
                                 />
                             </div>
 
@@ -134,6 +140,7 @@ function Contact() {
                                         onChange={handleChange}
                                         required
                                         placeholder="tu@email.com"
+                                        disabled={loading}
                                     />
                                 </div>
 
@@ -141,52 +148,59 @@ function Contact() {
                                     <label htmlFor="phone">Teléfono</label>
                                     <input
                                         type="tel"
-                                        id="phone"
-                                        name="phone"
+                                        id="telefono"
+                                        name="telefono"
                                         className="form-control"
-                                        value={formData.phone}
+                                        value={formData.telefono}
                                         onChange={handleChange}
                                         placeholder="+56 9 1234 5678"
+                                        disabled={loading}
                                     />
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="subject">Asunto *</label>
+                                <label htmlFor="asunto">Asunto *</label>
                                 <select
-                                    id="subject"
-                                    name="subject"
+                                    id="asunto"
+                                    name="asunto"
                                     className="form-control"
-                                    value={formData.subject}
+                                    value={formData.asunto}
                                     onChange={handleChange}
                                     required
+                                    disabled={loading}
                                 >
                                     <option value="">Selecciona un asunto</option>
-                                    <option value="consulta">Consulta General</option>
-                                    <option value="pedido">Seguimiento de Pedido</option>
-                                    <option value="producto">Información de Producto</option>
-                                    <option value="devolucion">Devoluciones y Cambios</option>
-                                    <option value="tecnico">Soporte Técnico</option>
-                                    <option value="otro">Otro</option>
+                                    <option value="Consulta General">Consulta General</option>
+                                    <option value="Seguimiento de Pedido">Seguimiento de Pedido</option>
+                                    <option value="Informacion de Producto">Información de Producto</option>
+                                    <option value="Devolucion y Cambios">Devoluciones y Cambios</option>
+                                    <option value="Soporte Tecnico">Soporte Técnico</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="message">Mensaje *</label>
+                                <label htmlFor="mensaje">Mensaje *</label>
                                 <textarea
-                                    id="message"
-                                    name="message"
+                                    id="mensaje"
+                                    name="mensaje"
                                     className="form-control"
                                     rows="6"
-                                    value={formData.message}
+                                    value={formData.mensaje}
                                     onChange={handleChange}
                                     required
                                     placeholder="Escribe tu mensaje aquí..."
+                                    disabled={loading}
                                 ></textarea>
                             </div>
 
-                            <button type="submit" className="btn btn-primary btn-lg w-100">
-                                <i className="bi bi-send-fill"></i> Enviar Mensaje
+                            <button type="submit" className="btn btn-primary btn-lg w-100" disabled={loading}>
+                                {loading ? (
+                                    <span><span className='spinner-border spinner-border-sm me-2'></span>Enviando...</span>
+                                ) : (
+                                    <span><i className="bi bi-send-fill"></i> Enviar Mensaje</span>
+                                )}
                             </button>
                         </form>
                     </div>
