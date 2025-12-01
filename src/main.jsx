@@ -12,13 +12,7 @@ import { ToastProvider } from './context/ToastContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <ProductProvider>
-      <CartProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </CartProvider>
-    </ProductProvider>
+      <App />
   </BrowserRouter>
 );
 

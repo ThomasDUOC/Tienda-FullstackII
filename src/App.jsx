@@ -23,9 +23,9 @@ function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname === ('/vistaadmin');
   return (
-    <CartProvider>
-      <ProductProvider>
-        <ToastProvider>
+    <ToastProvider>
+      <CartProvider>
+        <ProductProvider>
           <div className="app">
             {!isAdminRoute && <Header />}
             <main className="main-content">
@@ -43,9 +43,9 @@ function App() {
             </main>
             <Footer />
           </div>
-        </ToastProvider>
-      </ProductProvider>
-    </CartProvider>
+        </ProductProvider>
+      </CartProvider>
+    </ToastProvider>
   );
 }
 
