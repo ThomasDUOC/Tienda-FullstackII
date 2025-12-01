@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/images/Level-Up-Logo.png';
-import { validateEmail, validatePassword, validateNombre, validateRut } from '../assets/js/validators.js'; // Asegúrate de que esta ruta sea correcta
-import { authService } from '../services/authService';
+import { validateEmail, validatePassword, validateNombre, validateRut } from '../assets/js/validators.js';
+import { useToast } from '../context/ToastContext.jsx';
+import axios from 'axios';
 
 function Register() {
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -49,16 +51,32 @@ function Register() {
 
         if (isFormValid) {
             try {
-                await authService.register(formData);
+                const payload = {
+                    username: email,
+                    password: password,
+                    confirmPassword, confirmPassword,
+                    nombre: nombre,
+                    rut: rut,
+                    telefono: formData.telefono ? parseInt(formData.telefono) : 0,
+                    direccion: formData.direccion || ""
+                };
+
+                await axios.post('http://localhost:8080/auth/register', payload);
+
                 console.log('Registro exitoso');
+                showToast('¡Cuenta creada! Inicia sesión para continuar.', 'success');
                 navigate('/login');
-            } catch (error) {
-                console.error(error);
-                // Muestra el error que venga del backend si existe
-                setServerError('Error al registrar usuario. Intente nuevamente.');
+
+                } catch (error) {
+                    console.error("Error en registro", error);
+                    const mensajeError = error.response?.data || 'Error al registrar usuario';
+                    setServerError(mensajeError);
+                    showToast("Hubo un problema con tu registro", 'error');
+                } 
+            } else {
+                showToast("Por favor corrige los errores del formulario", 'warning');
             }
-        }
-    };
+        };
 
 
     return (

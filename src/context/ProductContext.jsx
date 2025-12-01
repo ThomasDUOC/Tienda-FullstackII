@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect, useContext, use } from "react";
-import { productoService } from "../services/productoService";
+import { createContext, useState, useEffect, useContext } from "react";
+import axios from 'axios';
+import { useToast } from "./ToastContext";
 
 const ProductContext = createContext();
 
@@ -8,18 +9,24 @@ export const useProducts = () => useContext(ProductContext);
 export const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const {showToast}  = useToast();
+
+    const BD_URL = "http://localhost:8080/api/v1/productos"
 
     const fetchProducts = async () => {
         try {
-            const data = await productoService.getAll();
+            const response = await axios.get(BD_URL);
             
-            const adaptedProducts = data.map(p => ({
+            const adaptedProducts = response.data.map(p => ({
                 ...p,
+                name: p.nombre,
+                image: p.imagen,
                 category: p.categoria?.nombre || 'Sin categoría', // Mapeo crítico
                 platform: p.plataforma?.nombre || null,          // Mapeo crítico
                 price: p.precio.toLocaleString('es-CL'), 
                 // Guardamos el precio numérico original por si acaso
-                rawPrice: p.precio 
+                rawPrice: p.precio, 
+                specs: p.especificaciones || []
             }));
 
             setProducts(adaptedProducts);
@@ -39,13 +46,11 @@ export const ProductProvider = ({ children }) => {
             const currentProduct = products.find(p => p.id === productId);
             if (!currentProduct) return;
 
-            // CORRECCIÓN: Construimos el objeto manualmente en lugar de usar ...spread
-            // Esto evita el warning de "Duplicate key" y envía datos limpios al Java.
             const payload = {
                 id: currentProduct.id,
                 nombre: currentProduct.nombre,
                 descripcion: currentProduct.descripcion,
-                precio: currentProduct.rawPrice, // Usamos el precio numérico original
+                precio: currentProduct.precio, // Usamos el precio numérico original
                 stock: newStock,                 // El nuevo stock
                 imagen: currentProduct.imagen,
                 destacado: currentProduct.destacado,
@@ -55,31 +60,25 @@ export const ProductProvider = ({ children }) => {
                 plataforma: currentProduct.plataforma
             };
 
-            await productoService.update(productId, payload);
+            const token = localStorage.getItem('token');
+
+            await axios.put(`${BD_URL}/${productId}`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // <--- Aquí va el permiso
+                }
+            });
             
             // Actualizamos el estado local
             setProducts(prev => prev.map(p => 
                 p.id === productId ? { ...p, stock: newStock } : p
             ));
+
+            showToast("Stock actualizado correctamente", "success");
             
         } catch (error) {
             console.error("Error actualizando stock:", error);
-            alert("Error al actualizar el stock en el servidor");
+            showToast("Error al actualizar el stock: Permisos insuficientes o servidor caído.", "error");
         }
-    };
-
-    const addProduct = (newProduct) => {
-        const productWithId = {
-            ...newProduct,
-            id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
-            stock: parseInt(newProduct.stock) || 0,
-            featured: newProduct.featured || false,
-            specs: newProduct.specs || {}
-        };
-
-        const updatedProducts = [...products, productWithId];
-        setProducts(updatedProducts);
-        localStorage.setItem("products", JSON.stringify(updatedProducts));
     };
 
     return (

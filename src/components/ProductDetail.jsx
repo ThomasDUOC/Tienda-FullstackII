@@ -137,14 +137,14 @@ export const ProductDetail = () => {
                             </ul>
                         </div>
 
-                        {product.specs && (
+                        {product.specs &&  product.specs.length > 0 && (
                             <div className="product-specs mt-4">
                                 <h3>Especificaciones Técnicas</h3>
                                 <div className="specs-grid">
-                                    {Object.entries(product.specs).map(([key, value]) => (
-                                        <div key={key} className="spec-item">
-                                            <span className="spec-label">{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}:</span>
-                                            <span className="spec-value">{value}</span>
+                                    {product.specs.map((spec) => (
+                                        <div key={spec.id} className="spec-item">
+                                            <span className="spec-label">{spec.nombre}:</span>
+                                            <span className="spec-value">{spec.valorEspecifico}</span>
                                         </div>
                                     ))}
                                 </div>

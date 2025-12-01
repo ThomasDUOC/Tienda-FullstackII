@@ -1,10 +1,8 @@
-// src/components/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword } from '../assets/js/validators.js';
 import Logo from '../assets/images/Level-Up-Logo.png';
-// Importamos el servicio
-import { authService } from '../services/authService';
+import axios from 'axios';
 
 function Login() {
     const navigate = useNavigate();
@@ -36,14 +34,23 @@ function Login() {
 
         try {
             // Llamada al backend
-            const response = await authService.login(email, password);
+            const response = await axios.post('http://localhost:8080/auth/login', {
+                username: email,
+                password: password
+            });
 
-            console.log("Respuesta completa:", response)
+            const data = response.data;
 
-            if(response && response.role === 'ADMIN') {
-                navigate('/vistaadmin')
-            } else {
-                navigate('/');
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                if (data.role) localStorage.setItem('userRole', data.role);
+                if (data.userId) localStorage.setItem('userId', data.userId);
+
+                if (data.role === 'ADMIN') {
+                    navigate('/vistaadmin');
+                } else {
+                    navigate('/');
+                }
             }
             
         } catch (error) {

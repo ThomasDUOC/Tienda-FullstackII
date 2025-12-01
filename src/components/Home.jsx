@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getFeaturedProducts } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { ProductCard } from './ProductCard';
 import ps51920 from '../assets/images/ps51920.jpg'
 import god from '../assets/images/godwall.jpg';
@@ -13,7 +13,7 @@ const carouselSlides = [
         title: 'The Last of Us Part II',
         description: '¡Ya Disponible!',
         alt: 'The Last of Us Part II',
-        link: '/product/8'
+        link: '/product/7'
     },
     {
         id: 1,
@@ -21,7 +21,7 @@ const carouselSlides = [
         title: 'PlayStation 5',
         description: 'La nueva generación de consolas ya está aquí.',
         alt: 'PlayStation 5',
-        link: '/product/4'
+        link: '/product/1'
     },
     {
         id: 2,
@@ -34,7 +34,12 @@ const carouselSlides = [
 ];
 
 function Home() {
-    const featuredProducts = getFeaturedProducts();
+    const { products, loading } = useProducts();
+    const featuredProducts = products.filter(product => product.destacado === true);
+
+    if (loading) {
+        return <div className='text-center mt-5'>Cargando productos...</div>;
+    }
 
     return (
         <div className="home-page">
@@ -109,9 +114,13 @@ function Home() {
                 <div className="container">
                     <h2 className="section-title">Productos Destacados</h2>
                     <div className="products-grid">
-                        {featuredProducts.slice(0, 8).map(product => (
-                            <ProductCard key={product.id} product={product} showAddToCart={false} />
-                        ))}
+                        {featuredProducts.length > 0 ? (
+                            featuredProducts.slice(0, 8).map(product => (
+                                <ProductCard key={product.id} product={product} showAddToCart={false} />
+                        ))
+                    ) : (
+                            <p className='text-center'> No hay productos destacados por ahora</p>
+                    )}
                     </div>
                     <div className="text-center mt-4">
                         <Link to="/products" className="btn btn-outline-primary btn-lg">

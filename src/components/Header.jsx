@@ -16,7 +16,7 @@ function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        (product.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleSearch = (e) => {

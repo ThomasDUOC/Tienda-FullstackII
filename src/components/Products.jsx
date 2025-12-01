@@ -1,38 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { products, getProductsByPlatform } from '../data/products';
 import { ProductCard } from './ProductCard';
 import { useProducts } from '../context/ProductContext';
 import '../assets/css/products.css';
 
 export const Products = () => {
-    const { products } = useProducts()
+    const { products, loading } = useProducts();
     const [searchParams] = useSearchParams();
-    const [filteredProducts, setFilteredProducts] = useState(products);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedPlatform, setSelectedPlatform] = useState('all');
     const [sortBy, setSortBy] = useState('name');
 
     useEffect(() => {
-        let result = [...products];
+        const category = searchParams.get('category');
+        const platform = searchParams.get('platform');
 
-        // filtrar categoria (MANUALMENTE, ya no usamos la función importada)
-        if (selectedCategory !== 'all') {
-            result = result.filter(p => p.category === selectedCategory);
-        }
+        if (category) setSelectedCategory(category);
+        if (platform) setSelectedPlatform(platform);
     }, [searchParams]);
 
     useEffect(() => {
+
+        if (products.length === 0)  return;
+
         let result = [...products];
 
         // filtrar categoria
         if (selectedCategory !== 'all') {
-            result = getProductsByCategory(selectedCategory);
+            result = result.filter(p => p.category === selectedCategory);
         }
 
         // filtrar plataforma
         if (selectedPlatform !== 'all') {
-            result = result.filter(p => p.platform === selectedPlatform);
+            result = result.filter(p => p.platform && p.platform.includes(selectedPlatform));
         }
 
         const query = searchParams.get('search');
@@ -60,7 +61,9 @@ export const Products = () => {
         });
 
         setFilteredProducts(result);
-    }, [selectedCategory, selectedPlatform, sortBy]);
+    }, [products, selectedCategory, selectedPlatform, sortBy, searchParams]);
+
+    if (loading) return <div className="container mt-5 text-center"><h2>Cargando catálogo...</h2></div>;
 
     return (
         <div className="products-page">

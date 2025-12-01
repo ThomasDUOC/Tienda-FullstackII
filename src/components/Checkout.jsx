@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { datosRegiones } from '../data/regiones';
-import { pedidoService } from '../services/pedidoService';
+import { useToast } from '../context/ToastContext';
+import axios from 'axios'
 import '../assets/css/checkout.css';
 
 export const Checkout = () => {
@@ -47,19 +48,21 @@ export const Checkout = () => {
         }
     };
 
+    const { showToast } = useToast();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
         // sim de pago
         if (!userId) {
-            alert('Debes iniciar sesion para finalizar la compra.');
+            showToast('Debes iniciar sesión para comprar', 'info');
             navigate('/login');
             return;
         }
 
         try {
-            // 2. Construir el objeto PedidoRequest para Java
                 const orderPayload = {
                     idUsuario: parseInt(userId),
                     nombre: formData.firstName,
@@ -79,16 +82,20 @@ export const Checkout = () => {
                     }))
                 };
 
-                await pedidoService.createPedido(orderPayload);
+                await axios.post('http://localhost:8080/api/v1/pedidos', orderPayload, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
-                alert('¡Pedido realizado con éxito! ID guardado en base de datos.');
+                showToast('¡Pedido realizado con éxito!', 'success');
                 clearCart();
                 navigate('/');
                 
             } catch (error) {
                 console.error("Error en checkout:", error);
-                // Mostrar mensaje de error del backend si existe (ej: "Stock insuficiente")
-                alert("Error al procesar el pedido: " + (error.response?.data || error.message));
+                const msg = error.response?.data || "Error al procesar el pedido";
+                showToast(msg, 'error');    
             }
         };
 
