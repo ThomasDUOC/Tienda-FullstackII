@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react"; 
 import { useProducts } from '../context/ProductContext';
+import PurchaseLogs from './PurchaseLogs';
 
 function AddProductForm({ onClose, onAdd }) {
     const [formData, setFormData] = useState({
@@ -40,7 +41,6 @@ function AddProductForm({ onClose, onAdd }) {
             return;
         }
 
-        // Convert specs array to object
         const specsObject = {};
         specs.forEach(spec => {
             if (spec.key && spec.value) {
@@ -238,7 +238,7 @@ function VistaAdmin() {
 
     const { products, addProduct } = useProducts();
     const [showAddForm, setShowAddForm] = useState(false);
-    const [currentView, setCurrentView] = useState('products'); // 'products' or 'add'
+    const [currentView, setCurrentView] = useState('products');
 
     const handleAddProduct = (newProduct) => {
         addProduct(newProduct);
@@ -309,6 +309,16 @@ function VistaAdmin() {
                                     <span>Agregar Producto</span>
                                 </a>
                             </li>
+                            <li>
+                                <a 
+                                    href="#" 
+                                    className={`nav-link px-3 ${currentView === 'logs' ? 'active' : ''}`}
+                                    onClick={(e) => { e.preventDefault(); setCurrentView('logs'); }}
+                                >
+                                    <span className="me-2"><i className="bi bi-receipt"></i></span>
+                                    <span>Registro de Compras</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -317,40 +327,46 @@ function VistaAdmin() {
             {/* --- Contenido Principal (Renderizado Condicional) --- */}
             <main className="mt-5 pt-3">
                 <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="card">
-                                <div className="card-header d-flex justify-content-between align-items-center">
-                                    <span><i className="bi bi-box-seam me-2"></i> Gestionar Stock de Productos</span>
-                                    <button 
-                                        className="btn btn-primary btn-sm"
-                                        onClick={() => setShowAddForm(true)}
-                                    >
-                                        <i className="bi bi-plus-circle me-1"></i> Agregar Producto
-                                    </button>
-                                </div>
-                                <div className="card-body">
-                                    <div className="table-responsive">
-                                        <table className="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Producto</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Confirmar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {/* Mapea CADA producto a un StockRow */}
-                                                {products.map(product => (
-                                                    <StockRow key={product.id} product={product} />
-                                                ))}
-                                            </tbody>
-                                        </table>
+                    {currentView === 'products' && (
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="card">
+                                    <div className="card-header d-flex justify-content-between align-items-center">
+                                        <span><i className="bi bi-box-seam me-2"></i> Gestionar Stock de Productos</span>
+                                        <button 
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => setShowAddForm(true)}
+                                        >
+                                            <i className="bi bi-plus-circle me-1"></i> Agregar Producto
+                                        </button>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="table-responsive">
+                                            <table className="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Producto</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Confirmar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {/* Mapea CADA producto a un StockRow */}
+                                                    {products.map(product => (
+                                                        <StockRow key={product.id} product={product} />
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
+
+                    {currentView === 'logs' && (
+                        <PurchaseLogs />
+                    )}
                 </div>
             </main>
 
