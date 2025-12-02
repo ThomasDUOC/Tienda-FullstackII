@@ -1,22 +1,30 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react"; 
 import { useProducts } from '../context/ProductContext';
+import { useToast } from "../context/ToastContext";
 
 function AddProductForm({ onClose, onAdd }) {
+    const { showToast } = useToast();
+
     const [formData, setFormData] = useState({
         name: '',
-        category: 'Consolas',
+        categoryId: '1',
+        platformId: '1',
         price: '',
         image: '',
         description: '',
-        stock: 0
+        stock: 0,
+        featured: false
     });
 
     const [specs, setSpecs] = useState([]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => 
+            ({ ...prev,
+            [name]: type === 'checkbox' ? checked : value 
+        }));
     };
 
     const addSpec = () => {
@@ -36,19 +44,55 @@ function AddProductForm({ onClose, onAdd }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!formData.name || !formData.price) {
-            alert('Por favor completa los campos obligatorios (Nombre y Precio)');
+            showToast('Por favor completa los campos obligatorios (Nombre y Precio)', 'warning');
             return;
         }
 
-        // Convert specs array to object
-        const specsObject = {};
-        specs.forEach(spec => {
-            if (spec.key && spec.value) {
-                specsObject[spec.key] = spec.value;
-            }
-        });
+        // Mapeo de IDs a nombres de categorías y plataformas
+        const categoriaMap = {
+            '1': 'Consolas',
+            '2': 'Juegos',
+            '3': 'Accesorios'
+        };
 
-        onAdd({ ...formData, specs: specsObject });
+        const plataformaMap = {
+            '1': 'PlayStation 5',
+            '2': 'PlayStation 4',
+            '3': 'Xbox Series X',
+            '4': 'Nintendo Switch',
+            '5': 'PC'
+        };
+
+        const specsList = specs
+            .filter(s => s.key && s.value);
+        
+        // Convertir especificaciones de array a objeto/map
+        const specsObject = {};
+        specsList.forEach(spec => {
+            specsObject[spec.key] = spec.value;
+        });
+        
+        const productPayload = {
+            nombre: formData.name,
+            precio: parseInt(formData.price),
+            stock: parseInt(formData.stock),
+            imagen: formData.image,
+            descripcion: formData.description,
+            destacado: formData.featured,
+            // Enviar con id Y nombre (como hace updateStock)
+            categoria: { 
+                id: parseInt(formData.categoryId),
+                nombre: categoriaMap[formData.categoryId]
+            },
+            plataforma: { 
+                id: parseInt(formData.platformId),
+                nombre: plataformaMap[formData.platformId]
+            },
+            // Especificaciones como Map/Object, no como lista
+            especificaciones: specsObject
+        };
+
+        onAdd(productPayload);
         onClose();
     };
 
@@ -78,14 +122,30 @@ function AddProductForm({ onClose, onAdd }) {
                                     <label className="form-label">Categoría *</label>
                                     <select
                                         className="form-select"
-                                        name="category"
-                                        value={formData.category}
+                                        name="categoryId"
+                                        value={formData.categoryId}
                                         onChange={handleChange}
                                     >
-                                        <option value="Consolas">Consolas</option>
-                                        <option value="Juegos">Juegos</option>
-                                        <option value="Accesorios">Accesorios</option>
-                                        <option value="Componentes">Componentes</option>
+                                        <option value="">Seleccione categoría</option>
+                                        <option value="1">Consolas</option>
+                                        <option value="2">Juegos</option>
+                                        <option value="3">Accesorios</option>
+                                    </select>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label className="form-label">Plataforma *</label>
+                                    <select
+                                        className="form-select"
+                                        name="platformId"
+                                        value={formData.platformId}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Seleccione plataforma</option>
+                                        <option value="1">PlayStation 5</option>
+                                        <option value="2">PlayStation 4</option>
+                                        <option value="3">Xbox Series X</option>
+                                        <option value="4">Nintendo Switch</option>
+                                        <option value="5">PC</option>
                                     </select>
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -211,13 +271,13 @@ function StockRow({ product }) {
         
     };
     useEffect(() => {
-        setLocalStock(product.stock);
+        setLocalStock(product.stock || 0);
     }, [product.stock]);
 
     return (
         <tr>
             <td>
-                <img src={product.image} alt={product.name} width="60" className="me-3 rounded" />
+                {product.image && <img src={product.image} alt={product.name} width="60" className="me-3 rounded" />}
                 <strong>{product.name}</strong>
             </td>
             <td>
