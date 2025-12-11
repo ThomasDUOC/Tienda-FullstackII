@@ -17,14 +17,15 @@ export const ProductProvider = ({ children }) => {
     const fetchProducts = async () => {
         try {
             const response = await axios.get(BD_URL);
-            
-            // Adaptamos los datos de Java a React
+
             const adaptedProducts = response.data.map(p => ({
                 ...p,
                 name: p.nombre,
                 image: p.imagen,
                 category: p.categoria?.nombre || 'Sin categoría',
+                categoryId: p.categoria?.id,
                 platform: p.plataforma?.nombre || null,
+                platformId: p.plataforma?.id,
                 price: p.precio ? p.precio.toLocaleString('es-CL') : '0', 
                 rawPrice: p.precio || 0, 
                 specs: p.especificaciones || []
@@ -42,7 +43,6 @@ export const ProductProvider = ({ children }) => {
         fetchProducts();
     }, []);
 
-    // --- FUNCIÓN AGREGAR PRODUCTO CORREGIDA ---
     const addProduct = async (productData) => {
         try {
             const token = localStorage.getItem('token');
@@ -83,7 +83,6 @@ export const ProductProvider = ({ children }) => {
             const currentProduct = products.find(p => p.id === productId);
             if (!currentProduct) return;
 
-            // Datos para Java (manteniendo estructura original)
             const payload = {
                 id: currentProduct.id,
                 nombre: currentProduct.nombre,
@@ -93,7 +92,8 @@ export const ProductProvider = ({ children }) => {
                 imagen: currentProduct.imagen,
                 destacado: currentProduct.destacado,
                 categoria: currentProduct.categoria, 
-                plataforma: currentProduct.plataforma
+                plataforma: currentProduct.plataforma,
+                especificaciones: currentProduct.especificaciones
             };
 
             const token = localStorage.getItem('token');
@@ -114,8 +114,27 @@ export const ProductProvider = ({ children }) => {
         }
     };
 
+    const updateProduct = async (productId, productData) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return false;
+
+            await axios.put(`${BD_URL}/${productId}`, productData, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            await fetchProducts();
+            showToast("Producto actualizado exitosamente", "success");
+            return true;
+        } catch (error) {
+            console.error("Error actualizando producto:", error);
+            showToast("Error al actualizar producto", "error");
+            return false;
+        }
+    }
+
     return (
-        <ProductContext.Provider value={{ products, updateStock, addProduct, loading }}>
+        <ProductContext.Provider value={{ products, updateStock, addProduct, updateProduct, loading }}>
             {children}
         </ProductContext.Provider>
     );
