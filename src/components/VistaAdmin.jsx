@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react"; 
 import { useProducts } from '../context/ProductContext';
 import { useToast } from "../context/ToastContext";
+import PurchaseLogs from "./PurchaseLogs";
 
 function ProductForm({ onClose, onSave, initialData = null }) {
     const { showToast } = useToast();
@@ -94,8 +95,8 @@ function ProductForm({ onClose, onSave, initialData = null }) {
     };
 
     return (
-        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog modal-lg">
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1060 }}>
+            <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">{initialData ? 'Editar Producto' : 'Agregar Nuevo Producto'}</h5>
@@ -103,86 +104,40 @@ function ProductForm({ onClose, onSave, initialData = null }) {
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleSubmit}>
-                            <div className="row">
-                                <div className="col-md-6 mb-3">
-                                    <label className="form-label">Nombre *</label>
-                                    <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required />
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label className="form-label">Precio *</label>
-                                    <input type="number" className="form-control" name="price" value={formData.price} onChange={handleChange} placeholder="ej: 50000" required />
-                                </div>
-                                
-                                {/* SELECT DE CATEGORÍA CON IDs */}
-                                <div className="col-md-6 mb-3">
-                                    <label className="form-label">Categoría *</label>
+                            <div className="row g-3">
+                                <div className="col-md-6"><label className="form-label">Nombre *</label><input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required /></div>
+                                <div className="col-md-3">
+                                    <label className="form-label">Categoría</label>
                                     <select className="form-select" name="categoryId" value={formData.categoryId} onChange={handleChange}>
-                                        <option value="1">Consolas</option>
-                                        <option value="2">Juegos</option>
-                                        <option value="3">Accesorios</option>
+                                        <option value="1">Consolas</option><option value="2">Juegos</option><option value="3">Accesorios</option>
                                     </select>
                                 </div>
-
-                                {/* SELECT DE PLATAFORMA (NUEVO) */}
-                                <div className="col-md-6 mb-3">
-                                    <label className="form-label">Plataforma *</label>
+                                <div className="col-md-3">
+                                    <label className="form-label">Plataforma</label>
                                     <select className="form-select" name="platformId" value={formData.platformId} onChange={handleChange}>
-                                        <option value="1">PlayStation</option>
-                                        <option value="2">Xbox</option>
-                                        <option value="3">Nintendo</option>
-                                        <option value="4">PC</option>
+                                        <option value="1">PlayStation</option><option value="2">Xbox</option><option value="3">Nintendo</option><option value="4">PC</option>
                                     </select>
                                 </div>
-
-                                <div className="col-md-6 mb-3">
-                                    <label className="form-label">Stock Inicial</label>
-                                    <input type="number" className="form-control" name="stock" value={formData.stock} onChange={handleChange} min="0" />
-                                </div>
-
-                                <div className="col-md-6 mb-3 d-flex align-items-end">
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" type="checkbox" name="featured" id="feat" checked={formData.featured} onChange={handleChange} />
-                                        <label className="form-check-label" htmlFor="feat">Destacado</label>
-                                    </div>
-                                </div>
-
-                                <div className="col-12 mb-3">
-                                    <label className="form-label">URL de Imagen</label>
-                                    <input type="text" className="form-control" name="image" value={formData.image} onChange={handleChange} placeholder="https://..." />
-                                </div>
-                                <div className="col-12 mb-3">
-                                    <label className="form-label">Descripción</label>
-                                    <textarea className="form-control" name="description" value={formData.description} onChange={handleChange} rows="3"></textarea>
-                                </div>
-
-                                {/* SECCIÓN ESPECIFICACIONES (Tu diseño intacto) */}
-                                <div className="col-12 mb-3">
-                                    <div className="d-flex justify-content-between align-items-center mb-2">
-                                        <label className="form-label mb-0">Especificaciones Técnicas</label>
-                                        <button type="button" className="btn btn-sm btn-outline-primary" onClick={addSpec}>
-                                            <i className="bi bi-plus-circle me-1"></i> Agregar
-                                        </button>
-                                    </div>
-                                    {specs.map((spec, index) => (
-                                        <div key={index} className="row g-2 mb-2 align-items-center">
-                                            <div className="col-5">
-                                                <input type="text" className="form-control form-control-sm" placeholder="Nombre (ej: Género)" value={spec.key} onChange={(e) => handleSpecChange(index, 'key', e.target.value)} />
-                                            </div>
-                                            <div className="col-6">
-                                                <input type="text" className="form-control form-control-sm" placeholder="Valor (ej: Acción)" value={spec.value} onChange={(e) => handleSpecChange(index, 'value', e.target.value)} />
-                                            </div>
-                                            <div className="col-1">
-                                                <button type="button" className="btn btn-sm btn-danger" onClick={() => removeSpec(index)}>
-                                                    <i className="bi bi-trash"></i>
-                                                </button>
-                                            </div>
+                                <div className="col-md-6"><label className="form-label">Precio *</label><input type="number" className="form-control" name="price" value={formData.price} onChange={handleChange} required /></div>
+                                <div className="col-md-6"><label className="form-label">Stock</label><input type="number" className="form-control" name="stock" value={formData.stock} onChange={handleChange} /></div>
+                                <div className="col-12"><label className="form-label">URL Imagen</label><input type="text" className="form-control" name="image" value={formData.image} onChange={handleChange} /></div>
+                                <div className="col-12"><label className="form-label">Descripción</label><textarea className="form-control" name="description" value={formData.description} onChange={handleChange} rows="2"></textarea></div>
+                                
+                                <div className="col-12">
+                                    <div className="d-flex justify-content-between mb-2"><label className="form-label">Especificaciones</label><button type="button" className="btn btn-sm btn-outline-secondary" onClick={addSpec}>+ Agregar</button></div>
+                                    {specs.map((s, i) => (
+                                        <div key={i} className="row g-2 mb-2">
+                                            <div className="col-5"><input className="form-control form-control-sm" placeholder="Clave" value={s.key} onChange={e=>handleSpecChange(i,'key',e.target.value)}/></div>
+                                            <div className="col-6"><input className="form-control form-control-sm" placeholder="Valor" value={s.value} onChange={e=>handleSpecChange(i,'value',e.target.value)}/></div>
+                                            <div className="col-1"><button type="button" className="btn btn-sm btn-danger w-100" onClick={()=>removeSpec(i)}>×</button></div>
                                         </div>
                                     ))}
                                 </div>
+                                <div className="col-12"><div className="form-check"><input className="form-check-input" type="checkbox" name="featured" id="feat" checked={formData.featured} onChange={handleChange}/><label className="form-check-label" htmlFor="feat">Destacado</label></div></div>
                             </div>
-                            <div className="modal-footer">
+                            <div className="modal-footer px-0 pb-0 mt-4 border-top-0">
                                 <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
-                                <button type="submit" className="btn btn-primary">{initialData ? 'Guardar Cambios' : 'Agregar Producto'}</button>
+                                <button type="submit" className="btn btn-primary px-4">{initialData ? 'Guardar Cambios' : 'Crear Producto'}</button>
                             </div>
                         </form>
                     </div>
@@ -211,37 +166,36 @@ function StockRow({ product, onEdit }) {
 
     return (
         <tr>
-            <td>
+            <td className="align-middle ps-4">
                 <div className="d-flex align-items-center">
-                    {product.image && <img src={product.image} alt={product.name} width="50" height="50" className="me-3 rounded object-fit-cover border" />}
-                    
-                    <div className="d-flex flex-column">
-                        <span className="fw-bold fs-5 text-white mb-1">
-                            {product.name}
-                        </span>
-                        
-                        <div className="d-flex align-items-center">
-                            <span className="badge bg-secondary text-white border me-2">
-                                {product.category}
-                            </span>
-                            
-                            <span className="text-white fw-bold small">
-                                ${product.price}
-                            </span>
+                    <div className="bg-light rounded p-1 border me-3" style={{width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        {product.image ? (
+                            <img src={product.image} alt={product.name} style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+                        ) : (
+                            <i className="bi bi-image text-muted"></i>
+                        )}
+                    </div>
+                    <div>
+                        <div className="fw-bold text-white">{product.name}</div>
+                        <div className="d-flex align-items-center small mt-1">
+                            <span className="badge bg-secondary me-2">{product.category}</span>
+                            <span className="text-white fw-bold">${product.price}</span>
                         </div>
                     </div>
                 </div>
             </td>
             <td className="align-middle">
-                <div className="input-group input-group-sm" style={{ width: "120px" }}>
-                    <button className="btn btn-outline-secondary" onClick={() => handleQuantity(-1)}>-</button>
-                    <input type="number" className="form-control text-center p-0" value={localStock} onChange={handleInputChange} />
-                    <button className="btn btn-outline-secondary" onClick={() => handleQuantity(1)}>+</button>
+                <div className="d-flex justify-content-center">
+                    <div className="input-group input-group-sm" style={{ width: "120px" }}>
+                        <button className="btn btn-outline-secondary" onClick={() => handleQuantity(-1)}>-</button>
+                        <input type="number" className="form-control text-center p-0" value={localStock} onChange={handleInputChange} />
+                        <button className="btn btn-outline-secondary" onClick={() => handleQuantity(1)}>+</button>
+                    </div>
                 </div>
             </td>
             <td className="align-middle">
-                <div className="btn-group btn-group-sm">
-                    <button className="btn btn-success" onClick={handleUpdate} title="Guardar Stock">
+                <div className="d-flex justify-content-center gap-2">
+                    <button className="btn btn-sm btn-outline-success" onClick={handleUpdate} title="Guardar Stock">
                         <i className="bi bi-check-lg"></i>
                     </button>
                     <button className="btn btn-primary" onClick={() => onEdit(product)} title="Editar Producto">
@@ -279,65 +233,109 @@ function VistaAdmin() {
     };
 
     return (
-        <div>
+        <div className="bg-shadow min-vh-100" style={{ paddingBottom: '50px'}}>
             {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <div className="container-fluid">
-                    <a className="navbar-brand fw-bold text-uppercase me-auto" href="#">Panel Admin</a>
-                    <Link className="btn btn-outline-light btn-sm" to='/login'>Cerrar Sesión</Link>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-4 shadow">
+                <div className="container-fluid px-0">
+                    <a className="navbar-brand fw-bold text-uppercase d-flex align-items-center" href="#">
+                        <i className="bi bi-shield-lock-fill-me-2 text-warning"></i> Panel Admin
+                    </a>
+
+                    {/* Menu desplegable de usuario */}
+                    <div className="dropdown">
+                        <button className="btn btn-outline-secondary dropdown-toggle d-flex align-itmes-center gap-2 border-0" type="button" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center" style={{width: 32, height: 32}}>
+                                <i className="bi bi-person-fill"></i>
+                            </div>
+                            <span>Administrador</span>
+                        </button>
+                        <ul className="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="adminDropdown">
+                            <li><h6 className="dropdown-header text-white small">Gestión</h6></li>
+                            <li>
+                                <button className={`dropdown-item ${currentView === 'products' ? 'active-shadow' : ''} text-white`} onClick={() => setCurrentView('products')}>
+                                    <i className="bi bi-box-seam me-2 text-white"></i> Inventario de Productos
+                                </button>
+                            </li>
+                            <li>
+                                <button className={`dropdown-item ${currentView === 'sales' ? 'active-shadow' : ''} text-white`} onClick={() => setCurrentView('sales')}>
+                                    <i className="bi bi-receipt me-2 text-white"></i> Ventas
+                                </button>
+                            </li>
+
+                            <li><hr className="dropdown-divider" /></li>
+                            <li>
+                                <Link className="dropdown-item text-danger" to='/login'>
+                                    <i className="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            {/* Sidebar */}
-            <div className="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabIndex="-1" id="sidebar" style={{visibility: 'visible'}}>
-                <div className="offcanvas-body p-0">
-                    <nav className="navbar-dark">
-                        <ul className="navbar-nav pt-3">
-                            <li><div className="text-muted small fw-bold text-uppercase px-3">Menu</div></li>
-                            <li>
-                                <a href="#" className={`nav-link px-3 ${currentView === 'products' ? 'active' : ''}`} onClick={() => setCurrentView('products')}>
-                                    <i className="bi bi-speedometer2"></i> Productos
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-
             {/* Main Content */}
-            <main className="mt-5 pt-3">
-                <div className="container-fluid">
-                    <div className="card shadow-sm mt-3">
-                        <div className="card-header bg-shadow d-flex justify-content-between align-items-center">
-                            <h5 className="mb-0">Inventario</h5>
-                                <button className="btn btn-primary btn-sm" onClick={handleOpenAdd}>
-                                    <i className="bi bi-plus-lg"></i> Nuevo
+            <main className="container-fluid px-4" style={{marginTop: '80px'}}>
+                <div className="row">
+                    <div className="col-12">
+                        {/* Header de la Sección */}
+                        <div className="d-flex justify-content-between align-items-center mb-4 p-3 bg-shadow rounded shadow-sm border-start border-4-shadow">
+                            <div>
+                                <h2 className="mb-0 fw-bold text-white">
+                                    {currentView === 'products' ? 'Gestión de Inventario' : 'Historial de Ventas'}
+                                </h2>
+                                <p className="text-white mb-0 small">
+                                    {currentView === 'products' ? 'Administra tus productos, precios y stock.' : 'Revisa el detalle de todas las transacciones.'}
+                                </p>
+                            </div>
+                            
+                            {currentView === 'products' && (
+                                <button className="btn btn-primary d-flex align-items-center gap-2 shadow-sm" onClick={handleOpenAdd}>
+                                    <i className="bi bi-plus-lg"></i> 
+                                    <span className="d-none d-md-inline">Nuevo Producto</span>
                                 </button>
-                                </div>
+                            )}
+                        </div>
+                        {currentView === 'products' && (
+                            <div className="card shadow-sm border-0">
                                 <div className="card-body p-0">
                                     <div className="table-responsive">
                                         <table className="table table-hover align-middle mb-0">
-                                            <thead className="table-shadow">
+                                            <thead className="bg-shadow">
                                                 <tr>
-                                                    <th>Producto</th>
-                                                    <th>Stock Rápido</th>
-                                                    <th>Acciones</th>
+                                                    <th className="py-3 ps-4 text-white text-uppercase small" style={{width: '50%'}}>Producto</th>
+                                                    <th className="py-3 text-center text-white text-uppercase small" style={{width: '25%'}}>Stock</th>
+                                                    <th className="py-3 text-center text-white text-uppercase small" style={{width: '25%'}}>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {products.map(product => (
+                                                {products.length > 0 ? (
+                                                    products.map(product => (
                                                     <StockRow
                                                         key={product.id}
                                                         product={product}
                                                         onEdit={handleOpenEdit}
                                                     />
-                                                ))}
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="3" className="text-center py-5 text-muted">
+                                                        No hay productos cargados.
+                                                    </td>
+                                                </tr>
+                                            )}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                        )}
+                        {currentView === 'sales' && (
+                            <div className="mt-3">
+                                <PurchaseLogs />
+                            </div>
+                        )}
                         </div>
+                    </div>
                 </main>
 
             {/* Modal */}
