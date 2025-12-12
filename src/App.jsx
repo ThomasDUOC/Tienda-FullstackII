@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Register from './components/Register';
 import PurchaseLogs from './components/PurchaseLogs';
+import Perfil from './components/Perfil';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
@@ -39,6 +40,7 @@ function App() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/vistaadmin' element={<VistaAdmin />} />
+                <Route path='/perfil' element={<Perfil />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/purchaselogs' element={<PurchaseLogs />} />
               </Routes>

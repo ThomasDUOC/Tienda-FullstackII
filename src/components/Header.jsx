@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import Logo from '../assets/images/Level-Up-Logo.png';
@@ -32,6 +32,24 @@ function Header() {
         setShowDropdown(false);
     }
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userRole');
+
+        setIsLoggedIn(false);
+        navigate('/');
+        window.location.reload();
+    };
+
     return (
         <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
             <div className='container-fluid'>
@@ -53,9 +71,24 @@ function Header() {
                         <li className="nav-item">
                             <Link className='nav-link' to='/contact'>Contacto</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className='nav-link' to='/login'>Iniciar Sesion</Link>
-                        </li>
+                        {isLoggedIn ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link className='nav-link text-warning fw-bold' to='/perfil'>
+                                        <i className="bi bi-person-circle me-1"></i> Mi Cuenta
+                                    </Link>
+                                </li>
+                                <li className='nav-item'>
+                                    <button onClick={handleLogout} className='nav-link btn btn-link text-white' style={{textDecoration: 'none'}}>
+                                        <i className="bi bi-box-arrow-right me-1"></i> Salir
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
+                            <li className="nav-item">
+                                    <Link className='nav-link' to='/login'>Iniciar Sesion</Link>
+                            </li>
+                        )}
                     </ul>
                     <form className="d-flex me-5 position-relative" role="search" onSubmit={handleSearch}>
                         <div className='position-relative me-sm-2'>
