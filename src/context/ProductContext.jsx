@@ -21,6 +21,7 @@ export const ProductProvider = ({ children }) => {
             const adaptedProducts = response.data.map(p => ({
                 ...p,
                 name: p.nombre,
+                description: p.descripcion || '',
                 image: p.imagen,
                 category: p.categoria?.nombre || 'Sin categoría',
                 categoryId: p.categoria?.id,
@@ -133,8 +134,28 @@ export const ProductProvider = ({ children }) => {
         }
     }
 
+    const deleteProduct = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return false;
+
+            await axios.delete(`${BD_URL}/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            setProducts(prev => prev.filter(product => product.id !== id));
+
+            showToast("Producto eliminado correctamente", "success");
+            return true;
+        } catch (error) {
+            console.error("Error al eliminar producto:", error);
+            showToast("Error al eliminar. Puede que tenga pedidos asociados.", "error");
+            return false;
+        }
+    };
+
     return (
-        <ProductContext.Provider value={{ products, updateStock, addProduct, updateProduct, loading }}>
+        <ProductContext.Provider value={{ products, updateStock, addProduct, updateProduct, deleteProduct, loading }}>
             {children}
         </ProductContext.Provider>
     );

@@ -115,7 +115,7 @@ function ProductForm({ onClose, onSave, initialData = null }) {
                                 <div className="col-md-3">
                                     <label className="form-label">Plataforma</label>
                                     <select className="form-select" name="platformId" value={formData.platformId} onChange={handleChange}>
-                                        <option value="1">PlayStation</option><option value="2">Xbox</option><option value="3">Nintendo</option><option value="4">PC</option>
+                                        <option value="1">PlayStation 5</option><option value="2">PlayStation 4</option><option value="3">Xbox Series X</option><option value="4">Nintendo Switch</option><option value="5">PC</option>
                                     </select>
                                 </div>
                                 <div className="col-md-6"><label className="form-label">Precio *</label><input type="number" className="form-control" name="price" value={formData.price} onChange={handleChange} required /></div>
@@ -147,7 +147,7 @@ function ProductForm({ onClose, onSave, initialData = null }) {
     );
 }
 
-function StockRow({ product, onEdit }) {
+function StockRow({ product, onEdit, onDelete }) {
     const { updateStock } = useProducts();
     const [localStock, setLocalStock] = useState(product.stock);
 
@@ -164,11 +164,17 @@ function StockRow({ product, onEdit }) {
         setLocalStock(product.stock);
     }, [product.stock]);
 
+    const handleDeleteClick = () => {
+        if (window.confirm(`¿Estás seguro que deseas eliminar "${product.name}"?`)) {
+            onDelete(product.id);
+        }
+    }
+
     return (
         <tr>
             <td className="align-middle ps-4">
                 <div className="d-flex align-items-center">
-                    <div className="bg-light rounded p-1 border me-3" style={{width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <div className="bg-white rounded p-1 border me-3" style={{width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         {product.image ? (
                             <img src={product.image} alt={product.name} style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
                         ) : (
@@ -201,6 +207,9 @@ function StockRow({ product, onEdit }) {
                     <button className="btn btn-primary" onClick={() => onEdit(product)} title="Editar Producto">
                         <i className="bi bi-pencil-fill"></i>
                     </button>
+                    <button className="btn btn-sm btn-outline-danger" onClick={handleDeleteClick} title="Eliminar Producto">
+                        <i className="bi bi-trash-fill"></i>
+                    </button>
                 </div>
             </td>
         </tr>
@@ -208,7 +217,7 @@ function StockRow({ product, onEdit }) {
 }
 
 function VistaAdmin() {
-    const { products, addProduct, updateProduct } = useProducts();
+    const { products, addProduct, updateProduct, deleteProduct } = useProducts();
     const [showForm, setShowForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     const [currentView, setCurrentView] = useState('products');
@@ -221,6 +230,10 @@ function VistaAdmin() {
     const handleOpenEdit = (product) => {
         setEditingProduct(product); // Modo editar
         setShowForm(true);
+    };
+
+    const handleDeleteProduct = (id) => {
+        deleteProduct(id);
     };
 
     const handleSaveProduct = (payload, id) => {
@@ -314,6 +327,7 @@ function VistaAdmin() {
                                                         key={product.id}
                                                         product={product}
                                                         onEdit={handleOpenEdit}
+                                                        onDelete={handleDeleteProduct}
                                                     />
                                                 ))
                                             ) : (
