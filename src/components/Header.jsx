@@ -61,22 +61,20 @@ function Header() {
                 <div className='collapse navbar-collapse' id='navbarColor01'>
                     <ul className='navbar-nav me-auto'>
                         <li className='nav-item'>
-                            <Link className='nav-link active' to='/'>Inicio
+                            <Link className='nav-link active fw-bold' to='/'>Inicio
                                 <span className='visually-hidden'>(current)</span>
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to='/products'>Productos</Link>
+                            <Link className='nav-link fw-bold' to='/products'>Productos</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to='/contact'>Contacto</Link>
+                            <Link className='nav-link fw-bold' to='/contact'>Contacto</Link>
                         </li>
                         {isLoggedIn ? (
                             <>
                                 <li className="nav-item">
-                                    <Link className='nav-link text-warning fw-bold' to='/perfil'>
-                                        <i className="bi bi-person-circle me-1"></i> Mi Cuenta
-                                    </Link>
+                                    <Link className='nav-link fw-bold' to='/perfil'>Mi Perfil</Link>
                                 </li>
                                 <li className='nav-item'>
                                     <button onClick={handleLogout} className='nav-link btn btn-link text-white' style={{textDecoration: 'none'}}>
