@@ -33,7 +33,10 @@ export const Products = () => {
 
         // filtrar plataforma
         if (selectedPlatform !== 'all') {
-            result = result.filter(p => p.platform && p.platform.includes(selectedPlatform));
+            result = result.filter(p => {
+                if (!p.platform) return false;
+                return p.platform === selectedPlatform || p.platform.includes(selectedPlatform);
+            })
         }
 
         const query = searchParams.get('search');
@@ -47,13 +50,9 @@ export const Products = () => {
         result.sort((a, b) => {
             switch (sortBy) {
                 case 'price-low':
-                    const priceA = parseFloat(a.price.replace('.', ''));
-                    const priceB = parseFloat(b.price.replace('.', ''));
-                    return priceA - priceB;
+                    return (a.rawPrice || 0) - (b.rawPrice || 0)
                 case 'price-high':
-                    const priceA2 = parseFloat(a.price.replace('.', ''));
-                    const priceB2 = parseFloat(b.price.replace('.', ''));
-                    return priceB2 - priceA2;
+                    return (b.rawPrice || 0) - (a.rawPrice || 0)
                 case 'name':
                 default:
                     return a.name.localeCompare(b.name);
@@ -62,6 +61,13 @@ export const Products = () => {
 
         setFilteredProducts(result);
     }, [products, selectedCategory, selectedPlatform, sortBy, searchParams]);
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+        if (e.target.value !== 'Juegos') {
+            setSelectedPlatform('all');
+        }
+    }
 
     if (loading) return <div className="container mt-5 text-center"><h2>Cargando catálogo...</h2></div>;
 
@@ -76,7 +82,7 @@ export const Products = () => {
                         <select
                             className="form-select"
                             value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            onChange={handleCategoryChange}
                         >
                             <option value="all">Todas</option>
                             <option value="Consolas">Consolas</option>
@@ -85,7 +91,7 @@ export const Products = () => {
                         </select>
                     </div>
 
-                    {selectedCategory === 'juegos' && (
+                    {selectedCategory === 'Juegos' && (
                         <div className="filter-group">
                             <label>Plataforma:</label>
                             <select
@@ -94,9 +100,11 @@ export const Products = () => {
                                 onChange={(e) => setSelectedPlatform(e.target.value)}
                             >
                                 <option value="all">Todas</option>
-                                <option value="PlayStation">PlayStation</option>
-                                <option value="Xbox">Xbox</option>
-                                <option value="Nintendo">Nintendo</option>
+                                <option value="PlayStation 5">PlayStation 5</option>
+                                <option value="PlayStation 4">PlayStation 4</option>
+                                <option value="Xbox">Xbox Series X</option>
+                                <option value="Nintendo">Nintendo Switch</option>
+                                <option value="PC">PC</option>
                             </select>
                         </div>
                     )}
