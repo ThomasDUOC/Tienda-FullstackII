@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { datosRegiones } from '../data/regiones';
@@ -26,11 +26,79 @@ export const Checkout = () => {
 
     const [comunasDispo, setComunasDispo] = useState([]);
 
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+
+        if (userId && token) {
+            const fetchUserData = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/v1/usuarios/${userId}`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const user = response.data;
+
+                    // Separar nombre y apellido si es posible (ya que en BD es un solo campo)
+                    const nombreCompleto = user.nombre || '';
+                    const primerEspacio = nombreCompleto.indexOf(' ');
+                    let nombre = nombreCompleto;
+                    let apellido = '';
+
+                    if (primerEspacio !== -1) {
+                        nombre = nombreCompleto.substring(0, primerEspacio);
+                        apellido = nombreCompleto.substring(primerEspacio + 1);
+                    }
+
+                    // Actualizamos el formulario preservando lo que no viene del perfil
+                    setFormData(prev => ({
+                        ...prev,
+                        firstName: nombre,
+                        lastName: apellido,
+                        email: user.username || '', // En tu backend username es el email
+                        phone: user.telefono ? String(user.telefono) : '',
+                        address: user.direccion || ''
+                        // Nota: Región y Comuna no se guardan en el perfil, así que quedan vacíos para que el usuario elija
+                    }));
+
+                } catch (error) {
+                    console.error("Error cargando datos del usuario para checkout", error);
+                }
+            };
+            fetchUserData();
+        }
+    }, []);
+
     const handleChange = async (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+    const handlePaymentInput = (e) => {
+        let { name, value } = e.target;
+
+        if (name === 'cardNumber') {
+            const raw = value.replace(/\D/g, '');
+            const formatted = raw.match(/.{1,4}/g)?.join(' ') || raw;
+            value = formatted.substring(0, 19);
+        }
+
+        if (name === 'expiryDate') {
+            const raw = value.replace(/\D/g, '');
+
+            if (raw.length >= 3) {
+                value = `${raw.slice(0, 2)}/${raw.slice(2, 4)}`;
+            } else {
+                value = raw;
+            }
+        }
+
+        if (name === 'cardName') {
+            value = value.toUpperCase();
+        }
+
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleRegionChange = (e) => {
@@ -55,10 +123,15 @@ export const Checkout = () => {
 
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-        // sim de pago
+
         if (!userId) {
             showToast('Debes iniciar sesión para comprar', 'info');
             navigate('/login');
+            return;
+        }
+
+        if (formData.cardNumber.replace(/\s/g, '').length < 16) {
+            showToast('El número de tarjeta esta incompleto', 'error');
             return;
         }
 
@@ -234,9 +307,10 @@ export const Checkout = () => {
                                         type="text"
                                         className="form-control"
                                         name="cardNumber"
-                                        placeholder="1234 5678 9012 3456"
+                                        placeholder="0000 0000 0000 0000"
                                         value={formData.cardNumber}
-                                        onChange={handleChange}
+                                        onChange={handlePaymentInput}
+                                        maxLength="19"
                                         required
                                     />
                                 </div>
@@ -246,8 +320,9 @@ export const Checkout = () => {
                                         type="text"
                                         className="form-control"
                                         name="cardName"
+                                        placeholder='Ingrese nombre con MAYUSCULAS'
                                         value={formData.cardName}
-                                        onChange={handleChange}
+                                        onChange={handlePaymentInput}
                                         required
                                     />
                                 </div>
@@ -261,7 +336,8 @@ export const Checkout = () => {
                                                 name="expiryDate"
                                                 placeholder="MM/AA"
                                                 value={formData.expiryDate}
-                                                onChange={handleChange}
+                                                onChange={handlePaymentInput}
+                                                maxLength="5"
                                                 required
                                             />
                                         </div>
@@ -276,7 +352,7 @@ export const Checkout = () => {
                                                 placeholder="123"
                                                 maxLength="3"
                                                 value={formData.cvv}
-                                                onChange={handleChange}
+                                                onChange={handlePaymentInput}
                                                 required
                                             />
                                         </div>
