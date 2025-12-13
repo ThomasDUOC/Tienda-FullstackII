@@ -44,7 +44,7 @@ function Header() {
         <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
             <div className='container-fluid'>
                 <img src={Logo} alt='Logo' style={{ width: '40px' }} />
-                <Link className='navbar-brand ms-3' to='/'>Level Up</Link>
+                <Link className='navbar-brand ms-3 fw-bold' to='/'>Level Up</Link>
                 <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarColor01' aria-controls='navbarColor01' aria-expanded='false' aria-label='Toggle navigation'>
                     <span className='navbar-toggler-icon'></span>
                 </button>
