@@ -40,16 +40,6 @@ function Header() {
         setIsLoggedIn(!!token);
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('userRole');
-
-        setIsLoggedIn(false);
-        navigate('/');
-        window.location.reload();
-    };
-
     return (
         <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
             <div className='container-fluid'>
@@ -72,19 +62,12 @@ function Header() {
                             <Link className='nav-link fw-bold' to='/contact'>Contacto</Link>
                         </li>
                         {isLoggedIn ? (
-                            <>
-                                <li className="nav-item">
-                                    <Link className='nav-link fw-bold' to='/perfil'>Mi Perfil</Link>
-                                </li>
-                                <li className='nav-item'>
-                                    <button onClick={handleLogout} className='nav-link btn btn-link text-white' style={{textDecoration: 'none'}}>
-                                        <i className="bi bi-box-arrow-right me-1"></i> Salir
-                                    </button>
-                                </li>
-                            </>
+                            <li className="nav-item">
+                                <Link className='nav-link fw-bold' to='/perfil'>Mi Perfil</Link>
+                            </li>
                         ) : (
                             <li className="nav-item">
-                                    <Link className='nav-link' to='/login'>Iniciar Sesion</Link>
+                                    <Link className='nav-link fw-bold' to='/login'>Iniciar Sesion</Link>
                             </li>
                         )}
                     </ul>
