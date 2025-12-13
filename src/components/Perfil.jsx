@@ -194,6 +194,13 @@ function Perfil() {
                         </div>
                     </form>
 
+                    <hr className='my-4' />
+                    <div className='d-grid gap-3'>
+                        <button type='button' className='btn btn-outline-primary btn-lg' onClick={() => navigate('/mispedidos')}>
+                            <i className='bi bi-box-seam me-2'></i> Ver Mis Pedidos
+                        </button>
+                    </div>
+
                     <hr className='my-4'/>
                     <div className='d-grid gap-2'>
                         <button type='button' className='btn btn-outline-danger' onClick={handleLogout}>
