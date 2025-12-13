@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useProducts } from '../context/ProductContext';
 import { useToast } from "../context/ToastContext";
 import PurchaseLogs from "./PurchaseLogs";
+import GestionUsuarios from "./GestionUsuarios";
 
 function ProductForm({ onClose, onSave, initialData = null }) {
     const { showToast } = useToast();
@@ -274,6 +275,11 @@ function VistaAdmin() {
                                     <i className="bi bi-receipt me-2 text-white"></i> Ventas
                                 </button>
                             </li>
+                            <li>
+                                <button className={`dropdown-item ${currentView === 'users' ? 'active-shadow' : ''} text-white`} onClick={() => setCurrentView('users')}>
+                                    <i className="bi bi-people-fill me-2 text-white"></i> Usuarios
+                                </button>
+                            </li>
 
                             <li><hr className="dropdown-divider" /></li>
                             <li>
@@ -294,10 +300,12 @@ function VistaAdmin() {
                         <div className="d-flex justify-content-between align-items-center mb-4 p-3 bg-shadow rounded shadow-sm border-start border-4-shadow">
                             <div>
                                 <h2 className="mb-0 fw-bold text-white">
-                                    {currentView === 'products' ? 'Gestión de Inventario' : 'Historial de Ventas'}
+                                    {currentView === 'products' ? 'Gestión de Inventario' : 
+                                    currentView === 'sales' ? 'Historial de Ventas' : 'Gestion de usuarios'}
                                 </h2>
                                 <p className="text-white mb-0 small">
-                                    {currentView === 'products' ? 'Administra tus productos, precios y stock.' : 'Revisa el detalle de todas las transacciones.'}
+                                    {currentView === 'products' ? 'Administra tus productos, precios y stock.' : 
+                                    currentView === 'sales' ? 'Revisa el detalle de todas las transacciones.' : 'Administra cuentas de clientes y administradores'}
                                 </p>
                             </div>
                             
@@ -346,6 +354,12 @@ function VistaAdmin() {
                         {currentView === 'sales' && (
                             <div className="mt-3">
                                 <PurchaseLogs />
+                            </div>
+                        )}
+
+                        {currentView === 'users' && (
+                            <div className="mt-3">
+                                <GestionUsuarios />
                             </div>
                         )}
                         </div>
