@@ -12,12 +12,13 @@ function Perfil() {
         id: '',
         nombre: '',
         rut: '',
-        username: '', // CORREGIDO: Usamos 'username' en lugar de 'email'
-        telefono: '',
+        username: '',
         direccion: '',
         password: '',
         rol: ''
     });
+
+    const [initialData, setInitialData] = useState({});
 
     useEffect(() => {
         fetchUserData();
@@ -37,22 +38,21 @@ function Perfil() {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             
-            // CORRECCIÓN CLAVE:
-            // 1. Extraemos los datos que llegaron
             const data = response.data;
             
-            // 2. Guardamos en el estado, PERO forzamos password a vacío
-            // para evitar re-encriptarlo al guardar.
-            setUserData({
+            const cleanData = {
                 id: data.id,
                 nombre: data.nombre,
                 rut: data.rut,
-                username: data.username, // Mapeamos el correo aquí
+                username: data.username,
                 telefono: data.telefono || '',
                 direccion: data.direccion || '',
                 rol: data.rol,
-                password: '' // ¡IMPORTANTE! Lo dejamos vacío
-            });
+                password: ''
+            };
+
+            setUserData(cleanData);
+            setInitialData(cleanData);
 
         } catch (error) {
             console.error("Error cargando perfil:", error);
@@ -72,9 +72,6 @@ function Perfil() {
         const token = localStorage.getItem('token');
 
         try {
-            // Preparamos el objeto para enviar
-            // Si la password está vacía, la quitamos del objeto o la mandamos vacía
-            // (Tu backend ya maneja que si está vacía, no la actualiza)
             const payload = { ...userData };
             
             await axios.put(`http://localhost:8080/api/v1/usuarios/${userId}`, payload, {
@@ -82,8 +79,7 @@ function Perfil() {
             });
             
             showToast("Datos actualizados correctamente", "success");
-            // Opcional: Recargar datos para confirmar
-            fetchUserData();
+            setInitialData({ ...userData });
 
         } catch (error) {
             console.error("Error actualizando perfil:", error);
@@ -91,13 +87,25 @@ function Perfil() {
         }
     };
 
+    const handleLogout = () => {
+        if (window.confirm("¿Estas seguro que quieres cerrar sesión?"))  {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userRole');
+            navigate('/');
+            window.location.reload();
+        }
+    }
+
+    const hasChanges = JSON.stringify(userData) !== JSON.stringify(initialData);
+
     if (loading) return <div className="container mt-5 text-center">Cargando perfil...</div>;
 
     return (
         <div className="container mt-5 mb-5">
-            <div className="card shadow-sm mx-auto" style={{ maxWidth: '600px' }}>
-                <div className="card-header bg-dark text-white">
-                    <h4 className="mb-0"><i className="bi bi-person-lines-fill me-2"></i>Mi Cuenta</h4>
+            <div className="card rounded-4 mx-auto" style={{ maxWidth: '600px', background: '#16213e' }}>
+                <div className="card-header text-white">
+                    <h4 className="mb-0 text-center fw-bold"><i className="bi bi-fill me-2"></i>Mi Cuenta</h4>
                 </div>
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
@@ -106,7 +114,8 @@ function Perfil() {
                             <label className="form-label fw-bold">Nombre Completo</label>
                             <input 
                                 type="text" 
-                                className="form-control bg-light" 
+                                className="form-control text-white"
+                                style={{background: '#0f1419'}} 
                                 value={userData.nombre} 
                                 readOnly 
                                 disabled 
@@ -118,7 +127,8 @@ function Perfil() {
                                 <label className="form-label fw-bold">RUT</label>
                                 <input 
                                     type="text" 
-                                    className="form-control bg-light" 
+                                    className="form-control text-white" 
+                                    style={{background: '#0f1419'}}
                                     value={userData.rut} 
                                     readOnly 
                                     disabled 
@@ -129,7 +139,8 @@ function Perfil() {
                                 {/* OJO: Aquí mostramos userData.username */}
                                 <input 
                                     type="email" 
-                                    className="form-control bg-light" 
+                                    className="form-control text-white" 
+                                    style={{background: '#0f1419'}}
                                     value={userData.username} 
                                     readOnly 
                                     disabled 
@@ -137,20 +148,30 @@ function Perfil() {
                             </div>
                         </div>
 
-                        <hr />
-                        <h5 className="text-primary mb-3">Datos Editables</h5>
+                        <hr/>
+                        <h5 className="text-white fw-bold mb-3">Editar</h5>
 
                         {/* CAMPOS EDITABLES */}
                         <div className="mb-3">
                             <label className="form-label">Teléfono</label>
-                            <input 
-                                type="number" 
-                                className="form-control" 
-                                name="telefono" 
-                                value={userData.telefono} 
-                                onChange={handleChange} 
-                                placeholder="Ej: 912345678"
-                            />
+                            <div className='input-group'>
+                                <span className='input-group-text text-whited fw-bold' style={{background: '#0f1419'}}>
+                                    +56
+                                </span>
+                                <input 
+                                    type="tel" 
+                                    className="form-control border-start-0 ps-1" 
+                                    name="telefono" 
+                                    value={userData.telefono} 
+                                    onChange={handleChange}
+                                    onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
+                                    placeholder="Ej: 912345678"
+                                    maxLength={9}
+                                />
+                            </div>
+                            <div className='form-text text-white' style={{fontSize: '0.8rem'}}>
+                                Ingresa tu número de esta forma (ej: 912345678)
+                            </div>
                         </div>
 
                         <div className="mb-3">
@@ -166,11 +187,19 @@ function Perfil() {
                         </div>
 
                         <div className="d-grid gap-2">
-                            <button type="submit" className="btn btn-primary">
-                                <i className="bi bi-save me-2"></i> Guardar Cambios
+                            <button type="submit" className={`btn ${hasChanges ? 'btn-primary' : 'btn-primary'}`} disabled={!hasChanges}>
+                                <i className={`bi ${hasChanges ? 'bi-save' : 'bi-check-circle'} me-2`}></i> 
+                                {hasChanges ? 'Guardar Cambios' : 'Sin cambios pendientes'}
                             </button>
                         </div>
                     </form>
+
+                    <hr className='my-4'/>
+                    <div className='d-grid gap-2'>
+                        <button type='button' className='btn btn-outline-danger' onClick={handleLogout}>
+                            <i className='bi bi-box-arrow-right me-2'></i> Cerrar Sesión
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
