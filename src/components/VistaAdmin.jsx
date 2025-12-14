@@ -4,6 +4,7 @@ import { useProducts } from '../context/ProductContext';
 import { useToast } from "../context/ToastContext";
 import PurchaseLogs from "./PurchaseLogs";
 import GestionUsuarios from "./GestionUsuarios";
+import MensajeContacto from "./MensajeContacto";
 
 function ProductForm({ onClose, onSave, initialData = null }) {
     const { showToast } = useToast();
@@ -280,6 +281,11 @@ function VistaAdmin() {
                                     <i className="bi bi-people-fill me-2 text-white"></i> Usuarios
                                 </button>
                             </li>
+                            <li>
+                                <button className={`dropdown-item ${currentView === 'messages' ? 'active-shadow' : ''} text-white`} onClick={() => setCurrentView('messages')}>
+                                    <i className="bi bi-envelope me-2 text-white"></i> Mensajes
+                                </button>
+                            </li>
 
                             <li><hr className="dropdown-divider" /></li>
                             <li>
@@ -301,11 +307,14 @@ function VistaAdmin() {
                             <div>
                                 <h2 className="mb-0 fw-bold text-white">
                                     {currentView === 'products' ? 'Gestión de Inventario' : 
-                                    currentView === 'sales' ? 'Historial de Ventas' : 'Gestion de usuarios'}
+                                    currentView === 'sales' ? 'Historial de Ventas' :
+                                    currentView === 'users' ? 'Gestion de usuarios' :
+                                    'Mensajes de Contacto'}
                                 </h2>
                                 <p className="text-white mb-0 small">
                                     {currentView === 'products' ? 'Administra tus productos, precios y stock.' : 
-                                    currentView === 'sales' ? 'Revisa el detalle de todas las transacciones.' : 'Administra cuentas de clientes y administradores'}
+                                    currentView === 'sales' ? 'Revisa el detalle de todas las transacciones.' : 
+                                    currentView === 'users' ? 'Administra cuentas de clientes y administradores' : 'Administra tus mensajes'}
                                 </p>
                             </div>
                             
@@ -360,6 +369,12 @@ function VistaAdmin() {
                         {currentView === 'users' && (
                             <div className="mt-3">
                                 <GestionUsuarios />
+                            </div>
+                        )}
+
+                        {currentView === 'messages' && (
+                            <div className="mt-3">
+                                <MensajeContacto />
                             </div>
                         )}
                         </div>
