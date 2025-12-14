@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword } from '../assets/js/validators.js';
+import { useAuth } from '../context/AuthContext.jsx';
 import Logo from '../assets/images/Level-Up-Logo.png';
 import axios from 'axios';
 
 function Login() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     // Estado para errores de login (ej: "Usuario no encontrado")
@@ -42,9 +44,7 @@ function Login() {
             const data = response.data;
 
             if (data.token) {
-                localStorage.setItem('token', data.token);
-                if (data.role) localStorage.setItem('userRole', data.role);
-                if (data.userId) localStorage.setItem('userId', data.userId);
+                login(data.token, data.role, data.userId);
 
                 if (data.role === 'ADMIN') {
                     navigate('/vistaadmin');

@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
 import Logo from '../assets/images/Level-Up-Logo.png';
 import Carrito from '../assets/images/carrito.png';
 
@@ -10,6 +11,7 @@ function Header() {
     const { getCartCount } = useCart();
     const cartCount = getCartCount();
     const { products } = useProducts();
+    const { isAuthenticated } = useAuth();
 
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
@@ -32,14 +34,6 @@ function Header() {
         setShowDropdown(false);
     }
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        setIsLoggedIn(!!token);
-    }, []);
-
     return (
         <nav className='navbar navbar-expand-lg bg-primary' data-bs-theme='dark'>
             <div className='container-fluid'>
@@ -61,7 +55,7 @@ function Header() {
                         <li className="nav-item">
                             <Link className='nav-link fw-bold' to='/contact'>Contacto</Link>
                         </li>
-                        {isLoggedIn ? (
+                        {isAuthenticated ? (
                             <li className="nav-item">
                                 <Link className='nav-link fw-bold' to='/perfil'>Mi Perfil</Link>
                             </li>

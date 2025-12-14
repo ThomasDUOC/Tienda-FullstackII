@@ -5,6 +5,8 @@ import { useToast } from "../context/ToastContext";
 import PurchaseLogs from "./PurchaseLogs";
 import GestionUsuarios from "./GestionUsuarios";
 import MensajeContacto from "./MensajeContacto";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function ProductForm({ onClose, onSave, initialData = null }) {
     const { showToast } = useToast();
@@ -223,6 +225,8 @@ function VistaAdmin() {
     const [showForm, setShowForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     const [currentView, setCurrentView] = useState('products');
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleOpenAdd = () => {
         setEditingProduct(null); // Modo crear
@@ -246,6 +250,11 @@ function VistaAdmin() {
         }
         setShowForm(false);
     };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    }
 
     return (
         <div className="bg-shadow min-vh-100" style={{ paddingBottom: '50px'}}>
@@ -289,9 +298,9 @@ function VistaAdmin() {
 
                             <li><hr className="dropdown-divider" /></li>
                             <li>
-                                <Link className="dropdown-item text-danger" to='/login'>
+                                <button className="dropdown-item text-danger" onClick={handleLogout}>
                                     <i className="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
-                                </Link>
+                                </button>
                             </li>
                         </ul>
                     </div>

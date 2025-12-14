@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
 import { ToastProvider } from './context/ToastContext';
+import { AuthProvider } from './context/AuthContext';
 import Home from './components/Home';
 import Login from './components/Login';
 import Contact from './components/Contact';
@@ -29,26 +30,28 @@ function App() {
     <ToastProvider>
       <CartProvider>
         <ProductProvider>
-          <div className="app">
-            {!isAdminRoute && <Header />}
-            <main className="main-content">
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/products' element={<Products />} />
-                <Route path='/product/:id' element={<ProductDetail />} />
-                <Route path='/cart' element={<Cart />} />
-                <Route path='/checkout' element={<Checkout />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/contact' element={<Contact />} />
-                <Route path='/vistaadmin' element={<VistaAdmin />} />
-                <Route path='/perfil' element={<Perfil />} />
-                <Route path='/mispedidos' element={<MisPedidos />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/purchaselogs' element={<PurchaseLogs />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className="app">
+              {!isAdminRoute && <Header />}
+              <main className="main-content">
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/products' element={<Products />} />
+                  <Route path='/product/:id' element={<ProductDetail />} />
+                  <Route path='/cart' element={<Cart />} />
+                  <Route path='/checkout' element={<Checkout />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/contact' element={<Contact />} />
+                  <Route path='/vistaadmin' element={<VistaAdmin />} />
+                  <Route path='/perfil' element={<Perfil />} />
+                  <Route path='/mispedidos' element={<MisPedidos />} />
+                  <Route path='/register' element={<Register />} />
+                  <Route path='/purchaselogs' element={<PurchaseLogs />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </AuthProvider>
         </ProductProvider>
       </CartProvider>
     </ToastProvider>
